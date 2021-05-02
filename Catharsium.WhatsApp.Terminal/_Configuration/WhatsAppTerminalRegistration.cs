@@ -8,12 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Catharsium.WhatsApp.Ui.Terminal._Configuration
 {
-    public static class WhatsAppTerminalUiRegistration
+    public static class WhatsAppTerminalRegistration
     {
-        public static IServiceCollection AddWhatsAppTerminalUi(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddWhatsAppTerminal(this IServiceCollection services, IConfiguration config)
         {
-            var configuration = config.Load<WhatsAppTerminalUiSettings>();
-            services.AddSingleton<WhatsAppTerminalUiSettings, WhatsAppTerminalUiSettings>(provider => configuration);
+            var configuration = config.Load<WhatsAppTerminalSettings>();
+            services.AddSingleton<WhatsAppTerminalSettings, WhatsAppTerminalSettings>(provider => configuration);
 
             services.AddConsoleIoUtilities(config);
             services.AddWhatsAppData(config);

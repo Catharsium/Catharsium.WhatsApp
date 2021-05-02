@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Ui.Terminal", "Catharsium.WhatsApp.Ui.Terminal\Catharsium.WhatsApp.Ui.Terminal.csproj", "{112443C3-2CD6-4FBB-BAA6-756C4DFBFC24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Terminal", "Catharsium.WhatsApp.Terminal\Catharsium.WhatsApp.Terminal.csproj", "{112443C3-2CD6-4FBB-BAA6-756C4DFBFC24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Data", "Catharsium.WhatsApp.Data\Catharsium.WhatsApp.Data.csproj", "{0B5C1444-7512-42B3-9E45-2B90DFE3CFE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Data", "Catharsium.WhatsApp.Data\Catharsium.WhatsApp.Data.csproj", "{0B5C1444-7512-42B3-9E45-2B90DFE3CFE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Entities", "Catharsium.WhatsApp.Entities\Catharsium.WhatsApp.Entities.csproj", "{2CCF5AD0-E003-4C7A-B933-2267C9D77708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Entities", "Catharsium.WhatsApp.Entities\Catharsium.WhatsApp.Entities.csproj", "{2CCF5AD0-E003-4C7A-B933-2267C9D77708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Entities.Tests", "Catharsium.WhatsApp.Entities.Tests\Catharsium.WhatsApp.Entities.Tests.csproj", "{739EEB26-8F2F-4E52-B848-9F545D700EFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Terminal.Tests", "Catharsium.WhatsApp.Terminal.Tests\Catharsium.WhatsApp.Terminal.Tests.csproj", "{B7D48C63-ED9F-452D-BD09-8628F9A9607E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Data.Tests", "Catharsium.WhatsApp.Data.Tests\Catharsium.WhatsApp.Data.Tests.csproj", "{8123313D-E137-41E8-AF3B-1880074F5D47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{2CCF5AD0-E003-4C7A-B933-2267C9D77708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CCF5AD0-E003-4C7A-B933-2267C9D77708}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CCF5AD0-E003-4C7A-B933-2267C9D77708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{739EEB26-8F2F-4E52-B848-9F545D700EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{739EEB26-8F2F-4E52-B848-9F545D700EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{739EEB26-8F2F-4E52-B848-9F545D700EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{739EEB26-8F2F-4E52-B848-9F545D700EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D48C63-ED9F-452D-BD09-8628F9A9607E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D48C63-ED9F-452D-BD09-8628F9A9607E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D48C63-ED9F-452D-BD09-8628F9A9607E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D48C63-ED9F-452D-BD09-8628F9A9607E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8123313D-E137-41E8-AF3B-1880074F5D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8123313D-E137-41E8-AF3B-1880074F5D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8123313D-E137-41E8-AF3B-1880074F5D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8123313D-E137-41E8-AF3B-1880074F5D47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

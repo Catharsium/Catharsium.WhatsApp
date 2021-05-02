@@ -19,7 +19,7 @@ namespace Catharsium.WhatsApp.Ui.Terminal
 
             var serviceProvider = new ServiceCollection()
                 .AddLogging(configure => configure.AddConsole())
-                .AddWhatsAppTerminalUi(configuration)
+                .AddWhatsAppTerminal(configuration)
                 .BuildServiceProvider();
 
             var chooseOperationActionHandler = serviceProvider.GetService<IChooseActionHandler>();

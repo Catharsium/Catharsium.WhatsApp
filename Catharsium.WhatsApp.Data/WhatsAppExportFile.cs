@@ -26,7 +26,7 @@ namespace Catharsium.WhatsApp.Data
             var regex = new Regex(@"(\d)+/(\d+)/(\d+), (\d+):(\d+) - (.[^:]+): (.+)");
             //var lines = File.ReadAllLines(@"E:\Cloud\OneDrive\BE 2.0.txt"); 
             var lines = File.ReadAllLines(@"E:\Cloud\OneDrive\WhatsApp Chat with Poly safe place.txt");
-             Message lastMessage = null;
+            Message lastMessage = null;
             foreach (var line in lines) {
                 var match = regex.Match(line);
                 if (match.Success) {
@@ -42,7 +42,7 @@ namespace Catharsium.WhatsApp.Data
                         Sender = this.settings.Users.FirstOrDefault(u => u.NickName == sender),
                         Text = text
                     };
-                    if(lastMessage.Sender == null) {
+                    if (lastMessage.Sender == null) {
                         ;
                     }
                     result.Add(lastMessage);

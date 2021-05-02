@@ -6,11 +6,9 @@ namespace Catharsium.WhatsApp.Entities.Models.Comparers
     {
         public bool Equals(User x, User y)
         {
-            if (x == null || y == null) {
-                return false;
-            }
-
-            return x.PhoneNumber == y.PhoneNumber;
+            return x != null
+                && y != null 
+                && x.PhoneNumber == y.PhoneNumber;
         }
 
 

@@ -1,6 +1,6 @@
 ﻿namespace Catharsium.WhatsApp.Ui.Terminal._Configuration
 {
-    public class WhatsAppTerminalUiSettings
+    public class WhatsAppTerminalSettings
     {
     }
 }
