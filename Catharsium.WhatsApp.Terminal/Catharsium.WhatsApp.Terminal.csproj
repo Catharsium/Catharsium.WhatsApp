@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Authors>Catharsium</Authors>
+    <Product>Catharsium.WhatsApp</Product>
+    <Version>0.7</Version>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
