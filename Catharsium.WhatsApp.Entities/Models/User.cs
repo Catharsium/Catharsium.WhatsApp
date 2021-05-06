@@ -6,6 +6,7 @@
         public string NickName { get; set; }
         public string DisplayName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsUnknown { get; set; }
 
 
         public override string ToString()

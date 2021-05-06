@@ -1,6 +1,7 @@
-﻿using Catharsium.Util.Testing.Extensions;
-using Catharsium.WhatsApp.Data;
+﻿using Catharsium.Util.IO.Interfaces;
+using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Data._Configuration;
+using Catharsium.WhatsApp.Data.Repository;
 using Catharsium.WhatsApp.Entities.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppData(configuration);
-            serviceCollection.ReceivedRegistration<IWhatsAppExportFile, WhatsAppExportFile>();
+            serviceCollection.ReceivedRegistration<IWhatsAppRepository, WhatsAppRepository>();
         }
 
 
@@ -30,6 +31,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppData(configuration);
+            serviceCollection.ReceivedRegistration<IFileFactory>();
         }
     }
 }

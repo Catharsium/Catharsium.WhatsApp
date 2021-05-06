@@ -1,8 +1,10 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Terminal.ActionHandlers;
+using Catharsium.WhatsApp.Terminal.ActionHandlers.Basic;
 using Catharsium.WhatsApp.Ui.Terminal._Configuration;
-using Catharsium.WhatsApp.Ui.Terminal.ActionHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,9 +22,12 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppTerminal(configuration);
-            serviceCollection.ReceivedRegistration<IActionHandler, ImportActionHandler>();
-            serviceCollection.ReceivedRegistration<IActionHandler, UsersActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, ActivityListActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, NationalityActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, HistogramActionHandler>();
 
+            serviceCollection.ReceivedRegistration<IConversationChooser, ConversationChooser>();
+            serviceCollection.ReceivedRegistration<IPeriodChooser, PeriodChooser>();
         }
 
 
@@ -33,7 +38,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppTerminal(configuration);
-            serviceCollection.ReceivedRegistration<IWhatsAppExportFile>();
+            serviceCollection.ReceivedRegistration<IWhatsAppRepository>();
         }
     }
 }

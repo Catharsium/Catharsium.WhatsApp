@@ -1,40 +1,53 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Entities.Data;
+﻿using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.Interfaces;
+using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catharsium.WhatsApp.Ui.Terminal.ActionHandlers
+namespace Catharsium.WhatsApp.Terminal.ActionHandlers
 {
-    public class ImportActionHandler : IActionHandler
+    public class ActivityListActionHandler : IActionHandler
     {
-        private readonly IWhatsAppExportFile dataFile;
+        private readonly IConversationChooser conversationChooser;
+        private readonly IPeriodChooser periodChooser;
         private readonly IConsole console;
 
-        public string FriendlyName => "Import";
+        public string FriendlyName => "Activity list";
 
 
-        public ImportActionHandler(IWhatsAppExportFile dataFile, IConsole console)
+        public ActivityListActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IConsole console)
         {
-            this.dataFile = dataFile;
+            this.conversationChooser = conversationChooser;
+            this.periodChooser = periodChooser;
             this.console = console;
         }
 
 
         public async Task Run()
         {
-            var messages = this.dataFile.GetMessages().OrderBy(m => m.Date);
+            var period = await this.periodChooser.AskForPeriod();
+            var messages = await this.conversationChooser.AskAndLoad();
+            messages = messages.Include(new PeriodFilter(period));
+
             var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
-            var statistics = users.Select(u => new UserStatistics(u, messages.Where(m => m.Sender == u).OrderBy(m => m.Date))).OrderByDescending(s => s.MessagesPerDay);
+            var statistics = users.Select(u => new Statistics(u, messages.Where(m => m.Sender == u).OrderBy(m => m.Timestamp))).OrderByDescending(s => s.MessagesPerDay);
             var activeUsers = statistics.Where(u => u.User.IsActive);
-            var referenceDate = messages.Last().Date;
+            var unknownUsers = statistics.Where(u => u.User.IsUnknown).Select(u => u.User).Distinct(new UserEqualityComparer());
+            var referenceDate = messages.Last().Timestamp;
             var dutchCulture = new CultureInfo("nl-NL");
 
-            this.console.WriteLine($"Last update: {messages.Last().Date:dd-MM-yyyy (HH:mm)}");
-            this.console.WriteLine($"Users: {activeUsers.Count()}");
+            var fromValue = period.From != DateTime.MinValue ? $"{period.From:dd-MM-yyyy}" : "*";
+            var toValue = period.To != DateTime.MaxValue ? $"{period.To:dd-MM-yyyy}" : "*";
+
+            this.console.WriteLine($"Last update:\t{messages.Last().Timestamp:dd-MM-yyyy (HH:mm)}");
+            this.console.WriteLine($"Period:\t\t{fromValue} - {toValue}");
+            this.console.WriteLine($"Message:\t{messages.Count()}");
+            this.console.WriteLine($"Users:\t\t{activeUsers.Count()}");
             this.console.WriteLine($"\t<Name>\t\t<Messages/Day>\t<Characters>\t<Messages>\t<MessageLength>\t<Last Message>");
             var counter = 1;
             foreach (var user in activeUsers) {
@@ -43,7 +56,7 @@ namespace Catharsium.WhatsApp.Ui.Terminal.ActionHandlers
         }
 
 
-        private void WriteUser(UserStatistics statistics, int rank, DateTime referenceDate, CultureInfo dutchCulture)
+        private void WriteUser(Statistics statistics, int rank, DateTime referenceDate, CultureInfo dutchCulture)
         {
             string text;
             this.console.Write(text = $"{rank}.");
@@ -64,13 +77,13 @@ namespace Catharsium.WhatsApp.Ui.Terminal.ActionHandlers
             this.FillSpaces(text.Length);
             this.console.ResetColor();
 
-            if (statistics.LastMessage.Date.AddDays(7) < referenceDate) {
+            if (statistics.LastMessage.Timestamp.AddDays(7) < referenceDate) {
                 this.console.ForegroundColor = ConsoleColor.Red;
             }
-            if (statistics.LastMessage.Date.AddDays(14) < referenceDate) {
+            if (statistics.LastMessage.Timestamp.AddDays(14) < referenceDate) {
                 this.console.ForegroundColor = ConsoleColor.Red;
             }
-            this.console.Write($"{statistics.LastMessage.Date.ToString("d MMMMM yyyy", dutchCulture)}");
+            this.console.Write($"{statistics.LastMessage.Timestamp.ToString("d MMMMM yyyy", dutchCulture)}");
             this.console.ResetColor();
             this.console.WriteLine();
         }
