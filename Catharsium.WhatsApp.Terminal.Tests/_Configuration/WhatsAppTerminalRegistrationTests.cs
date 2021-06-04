@@ -21,10 +21,13 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var serviceCollection = Substitute.For<IServiceCollection>();
             var configuration = Substitute.For<IConfiguration>();
 
-            serviceCollection.AddWhatsAppTerminal(configuration);
+            serviceCollection.AddWhatsAppTerminal(configuration); 
+            serviceCollection.ReceivedRegistration<IActionHandler, ImportActiveUsersActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, ActivityListActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, NationalityActionHandler>();
-            serviceCollection.ReceivedRegistration<IActionHandler, HistogramActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, ActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, HourOfTheDayHistogramActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, DayOfTheWeekHistogramActionHandler>();
 
             serviceCollection.ReceivedRegistration<IConversationChooser, ConversationChooser>();
             serviceCollection.ReceivedRegistration<IPeriodChooser, PeriodChooser>();

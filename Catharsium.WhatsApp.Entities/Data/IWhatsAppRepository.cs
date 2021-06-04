@@ -1,6 +1,7 @@
 ﻿using Catharsium.Util.IO.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Catharsium.WhatsApp.Entities.Data
 {
@@ -8,6 +9,6 @@ namespace Catharsium.WhatsApp.Entities.Data
     {
         IFile[] GetFiles();
 
-        IEnumerable<Message> GetMessages(IFile file);
+        Task<IEnumerable<Message>> GetMessages(IFile file);
     }
 }

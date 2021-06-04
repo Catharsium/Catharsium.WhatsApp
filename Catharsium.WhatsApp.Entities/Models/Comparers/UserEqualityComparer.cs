@@ -14,7 +14,7 @@ namespace Catharsium.WhatsApp.Entities.Models.Comparers
 
         public int GetHashCode(User obj)
         {
-            return obj.GetHashCode();
+            return obj.PhoneNumber.GetHashCode();
         }
     }
 }

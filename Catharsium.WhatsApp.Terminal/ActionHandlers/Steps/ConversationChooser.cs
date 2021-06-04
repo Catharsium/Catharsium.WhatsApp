@@ -25,9 +25,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Basic
         {
             var files = this.respository.GetFiles();
             var selectedFile = this.console.AskForItem(files);
-            return this.respository.GetMessages(selectedFile)
-                                   .Where(m => m.Sender.IsActive)
-                                   .OrderBy(m => m.Timestamp);
+            return (await this.respository.GetMessages(selectedFile)).OrderBy(m => m.Timestamp);
         }
     }
 }

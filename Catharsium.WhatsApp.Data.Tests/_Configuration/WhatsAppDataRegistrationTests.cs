@@ -1,8 +1,11 @@
-﻿using Catharsium.Util.IO.Interfaces;
+﻿using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Data._Configuration;
+using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Data.Repository;
 using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,7 +23,10 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppData(configuration);
+            serviceCollection.ReceivedRegistration<IUsersRepository, UsersRepository>();
             serviceCollection.ReceivedRegistration<IWhatsAppRepository, WhatsAppRepository>();
+            serviceCollection.ReceivedRegistration<IFilter<Message>, PeriodFilter>();
+            serviceCollection.ReceivedRegistration<IFilter<Message>, UserFilter>();
         }
 
 

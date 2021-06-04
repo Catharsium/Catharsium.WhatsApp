@@ -7,19 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Catharsium.WhatsApp.Data.Repository
 {
     public class WhatsAppRepository : IWhatsAppRepository
     {
         private readonly IFileFactory fileFactory;
+        private readonly IUsersRepository usersRepository;
         private readonly IConsole console;
         private readonly WhatsAppDataSettings settings;
 
 
-        public WhatsAppRepository(IFileFactory fileFactory, IConsole console, WhatsAppDataSettings settings)
+        public WhatsAppRepository(IFileFactory fileFactory, IUsersRepository usersRepository, IConsole console, WhatsAppDataSettings settings)
         {
             this.fileFactory = fileFactory;
+            this.usersRepository = usersRepository;
             this.console = console;
             this.settings = settings;
         }
@@ -31,8 +34,9 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
-        public IEnumerable<Message> GetMessages(IFile file)
+        public async Task<IEnumerable<Message>> GetMessages(IFile file)
         {
+            var users = await this.usersRepository.ReadFrom(file.ExtensionlessName);
             var lines = new List<string>();
             using (var reader = file.OpenText()) {
                 string line;
@@ -57,18 +61,14 @@ namespace Catharsium.WhatsApp.Data.Repository
                     var text = match.Groups[7].Value;
                     lastMessage = new Message {
                         Timestamp = new DateTime(year, month, day, hour, minute, 0),
-                        Sender = this.settings.Users.FirstOrDefault(u => u.NickName == sender),
+                        Sender = users.FirstOrDefault(u => u.Aliases.Any(a => a == sender) || u.PhoneNumber == sender),
                         Text = text
                     };
                     if (lastMessage.Sender == null) {
-                        var newUser = new User {
+                        lastMessage.Sender = new User {
                             PhoneNumber = sender,
-                            NickName = sender,
-                            IsActive = true,
-                            IsUnknown = true
+                            IsActive = false
                         };
-                        this.settings.Users.Add(newUser);
-                        lastMessage.Sender = newUser;
                     }
                     result.Add(lastMessage);
                 }

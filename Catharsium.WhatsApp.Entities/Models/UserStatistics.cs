@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace Catharsium.WhatsApp.Entities.Models
 {
-    public class Statistics
+    public class UserStatistics
     {
         public User User { get; }
         public IOrderedEnumerable<Message> Messages { get; }
 
 
-        public Statistics(User user, IOrderedEnumerable<Message> messages)
+        public UserStatistics(User user, IOrderedEnumerable<Message> messages)
         {
             this.User = user;
             this.Messages = messages;

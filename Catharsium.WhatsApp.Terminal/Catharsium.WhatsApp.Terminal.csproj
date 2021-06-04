@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Catharsium.Util.IO.Console" Version="20210502.1.0" />
+    <PackageReference Include="Catharsium.Math.Graph" Version="2021.6.4.4" />
+    <PackageReference Include="Catharsium.Util.IO.Console" Version="2021.6.4.11" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />

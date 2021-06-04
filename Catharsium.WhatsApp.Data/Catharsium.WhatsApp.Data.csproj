@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Catharsium.Util.Configuration" Version="20210502.1.0" />
-    <PackageReference Include="Catharsium.Util.IO" Version="20210502.1.0" />
-    <PackageReference Include="Catharsium.Util.IO.Console" Version="20210502.1.0" />
+    <PackageReference Include="Catharsium.Util.IO" Version="2021.6.4.11" />
+    <PackageReference Include="Catharsium.Util.IO.Console" Version="2021.6.4.11" />
   </ItemGroup>
 
   <ItemGroup>
