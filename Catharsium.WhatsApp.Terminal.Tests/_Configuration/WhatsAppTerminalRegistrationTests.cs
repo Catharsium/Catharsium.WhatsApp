@@ -1,6 +1,7 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using Catharsium.WhatsApp.Terminal.ActionHandlers;
 using Catharsium.WhatsApp.Terminal.ActionHandlers.Basic;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System.Collections.Generic;
 
 namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
 {
@@ -21,7 +23,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var serviceCollection = Substitute.For<IServiceCollection>();
             var configuration = Substitute.For<IConfiguration>();
 
-            serviceCollection.AddWhatsAppTerminal(configuration); 
+            serviceCollection.AddWhatsAppTerminal(configuration);
             serviceCollection.ReceivedRegistration<IActionHandler, ImportActiveUsersActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, ActivityListActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, NationalityActionHandler>();
@@ -41,7 +43,8 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppTerminal(configuration);
-            serviceCollection.ReceivedRegistration<IWhatsAppRepository>();
+            serviceCollection.ReceivedRegistration<IConversationRepository>();
+            serviceCollection.ReceivedRegistration<IEqualityComparer<Message>>();
         }
     }
 }

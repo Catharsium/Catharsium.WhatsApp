@@ -23,8 +23,10 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppData(configuration);
-            serviceCollection.ReceivedRegistration<IUsersRepository, UsersRepository>();
-            serviceCollection.ReceivedRegistration<IWhatsAppRepository, WhatsAppRepository>();
+            serviceCollection.ReceivedRegistration<IActiveUsersRepository, ActiveUsersRepository>();
+            serviceCollection.ReceivedRegistration<IConversationRepository, ConversationRepository>();
+            serviceCollection.ReceivedRegistration<IConversationUsersRepository, ConversationUsersRepository>();
+
             serviceCollection.ReceivedRegistration<IFilter<Message>, PeriodFilter>();
             serviceCollection.ReceivedRegistration<IFilter<Message>, UserFilter>();
         }

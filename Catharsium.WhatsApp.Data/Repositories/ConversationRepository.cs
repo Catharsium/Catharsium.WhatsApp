@@ -11,32 +11,74 @@ using System.Threading.Tasks;
 
 namespace Catharsium.WhatsApp.Data.Repository
 {
-    public class WhatsAppRepository : IWhatsAppRepository
+    public class ConversationRepository : IConversationRepository
     {
         private readonly IFileFactory fileFactory;
-        private readonly IUsersRepository usersRepository;
+        private readonly IEqualityComparer<Message> messageEqualityComparer;
         private readonly IConsole console;
         private readonly WhatsAppDataSettings settings;
 
 
-        public WhatsAppRepository(IFileFactory fileFactory, IUsersRepository usersRepository, IConsole console, WhatsAppDataSettings settings)
+        public ConversationRepository(IFileFactory fileFactory, IEqualityComparer<Message> messageEqualityComparer, IConsole console, WhatsAppDataSettings settings)
         {
             this.fileFactory = fileFactory;
-            this.usersRepository = usersRepository;
+            this.messageEqualityComparer = messageEqualityComparer;
             this.console = console;
             this.settings = settings;
         }
 
 
-        public IFile[] GetFiles()
+        private IFile[] GetFiles()
         {
             return this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt");
         }
 
 
-        public async Task<IEnumerable<Message>> GetMessages(IFile file)
+        public async Task<List<Conversation>> GetConversations()
         {
-            var users = await this.usersRepository.ReadFrom(file.ExtensionlessName);
+            var result = new List<Conversation>();
+            var files = this.GetFiles();
+
+            foreach (var file in files) {
+                var regex = new Regex("^(.+) (\\d)$");
+                var match = regex.Match(file.ExtensionlessName);
+                var name = file.ExtensionlessName;
+                if (match.Success && match.Groups.Count == 3) {
+                    name = match.Groups[1].Value;
+                }
+
+                var existingConversation = result.FirstOrDefault(c => c.Name == name);
+                if (existingConversation == null) {
+                    existingConversation = new Conversation {
+                        Name = name,
+                        Files = new List<IFile> { file },
+                        Messages = new List<Message>()
+                    };
+                    result.Add(existingConversation);
+                }
+                else {
+                    existingConversation.Files.Add(file);
+                }
+            }
+
+            return result;
+        }
+
+
+
+        public async Task<IEnumerable<Message>> GetMessages(Conversation conversation, IEnumerable<User> users)
+        {
+            var result = new List<Message>();
+            foreach (var file in conversation.Files) {
+                result.AddRange(await this.GetMessages(file, users));
+            }
+
+            return result.Distinct(this.messageEqualityComparer).ToList();
+        }
+
+
+        public async Task<IEnumerable<Message>> GetMessages(IFile file, IEnumerable<User> users)
+        {
             var lines = new List<string>();
             using (var reader = file.OpenText()) {
                 string line;

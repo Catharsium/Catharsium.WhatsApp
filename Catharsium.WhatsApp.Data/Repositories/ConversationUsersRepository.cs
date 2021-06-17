@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Catharsium.WhatsApp.Data.Repository
 {
-    public class UsersRepository : IUsersRepository
+    public class ConversationUsersRepository : IConversationUsersRepository
     {
         private readonly IFileFactory fileFactory;
         private readonly IJsonFileReader jsonFileReader;
@@ -17,7 +17,7 @@ namespace Catharsium.WhatsApp.Data.Repository
         private readonly WhatsAppDataSettings settings;
 
 
-        public UsersRepository(
+        public ConversationUsersRepository(
             IFileFactory fileFactory,
             IJsonFileReader jsonFileReader,
             IJsonFileWriter jsonFileWriter,
@@ -32,9 +32,9 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
-        public IFile GetFile(string fileName)
+        private IFile GetFile(string fileName)
         {
-            return this.fileFactory.CreateFile($"{this.settings.DataFolder}/{fileName}.json");
+            return this.fileFactory.CreateFile($"{this.settings.DataFolder}/Users/{fileName}.json");
         }
 
 

@@ -78,7 +78,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             this.console.ResetColor();
 
             if (statistics.LastMessage.Timestamp.AddDays(7) < referenceDate) {
-                this.console.ForegroundColor = ConsoleColor.Red;
+                this.console.ForegroundColor = ConsoleColor.Yellow;
             }
             if (statistics.LastMessage.Timestamp.AddDays(14) < referenceDate) {
                 this.console.ForegroundColor = ConsoleColor.Red;

@@ -1,8 +1,6 @@
 ﻿using Catharsium.Util.Configuration.Extensions;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO._Configuration;
-using Catharsium.Util.IO.Interfaces;
-using Catharsium.Util.IO.Json;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Data.Repository;
 using Catharsium.WhatsApp.Entities.Data;
@@ -21,8 +19,10 @@ namespace Catharsium.WhatsApp.Data._Configuration
 
             services.AddIoUtilities(config);
 
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IWhatsAppRepository, WhatsAppRepository>();
+            services.AddScoped<IActiveUsersRepository, ActiveUsersRepository>();
+            services.AddScoped<IConversationRepository, ConversationRepository>();
+            services.AddScoped<IConversationUsersRepository, ConversationUsersRepository>();
+
             services.AddScoped<IFilter<Message>, PeriodFilter>();
             services.AddScoped<IFilter<Message>, UserFilter>();
 
