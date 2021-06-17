@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace Catharsium.WhatsApp.Entities.Data
 {
-    public interface IConversationRepository
+    public interface IConversationsRepository
     {
         Task<List<Conversation>> GetConversations();
-
-        Task<IEnumerable<Message>> GetMessages(Conversation conversation, IEnumerable<User> users);
     }
 }

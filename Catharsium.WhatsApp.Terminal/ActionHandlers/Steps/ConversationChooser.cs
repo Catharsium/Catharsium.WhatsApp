@@ -11,14 +11,16 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Basic
 {
     public class ConversationChooser : IConversationChooser
     {
-        private readonly IConversationRepository respository;
+        private readonly IConversationsRepository respository;
+        private readonly IMessageParser messageParser;
         private readonly IConversationUsersRepository conversationUsersRepository;
         private readonly IConsole console;
 
 
-        public ConversationChooser(IConversationRepository respository, IConversationUsersRepository conversationUsersRepository, IConsole console)
+        public ConversationChooser(IConversationsRepository respository, IMessageParser messageParser, IConversationUsersRepository conversationUsersRepository, IConsole console)
         {
             this.respository = respository;
+            this.messageParser = messageParser;
             this.conversationUsersRepository = conversationUsersRepository;
             this.console = console;
         }
@@ -29,7 +31,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Basic
             var conversations = await this.respository.GetConversations();
             var selectedConversation = this.console.AskForItem(conversations);
             var conversationUsers = await this.conversationUsersRepository.ReadFrom(selectedConversation.Name);
-            return (await this.respository.GetMessages(selectedConversation, conversationUsers)).OrderBy(m => m.Timestamp);
+            return (await this.messageParser.GetMessages(selectedConversation, conversationUsers)).OrderBy(m => m.Timestamp);
         }
     }
 }

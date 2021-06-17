@@ -47,7 +47,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             this.console.WriteLine($"Last update:\t{messages.Last().Timestamp:dd-MM-yyyy (HH:mm)}");
             this.console.WriteLine($"Period:\t\t{fromValue} - {toValue}");
             this.console.WriteLine($"Message:\t{messages.Count()}");
-            this.console.WriteLine($"Users:\t\t{users.Count()}");
+            this.console.WriteLine($"Users:\t\t{users.Count}");
             this.console.WriteLine($"\t<Name>\t\t<Messages/Day>\t<Characters>\t<Messages>\t<MessageLength>\t<Last Message>");
             var counter = 1;
             foreach (var user in statistics) {

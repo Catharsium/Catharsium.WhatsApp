@@ -43,7 +43,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppTerminal(configuration);
-            serviceCollection.ReceivedRegistration<IConversationRepository>();
+            serviceCollection.ReceivedRegistration<IConversationsRepository>();
             serviceCollection.ReceivedRegistration<IEqualityComparer<Message>>();
         }
     }

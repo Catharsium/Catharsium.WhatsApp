@@ -3,6 +3,7 @@ using Catharsium.Util.IO.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Data.Filters;
+using Catharsium.WhatsApp.Data.Repositories.Readers;
 using Catharsium.WhatsApp.Data.Repository;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
@@ -24,8 +25,10 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
 
             serviceCollection.AddWhatsAppData(configuration);
             serviceCollection.ReceivedRegistration<IActiveUsersRepository, ActiveUsersRepository>();
-            serviceCollection.ReceivedRegistration<IConversationRepository, ConversationRepository>();
+            serviceCollection.ReceivedRegistration<IConversationsRepository, ConversationsRepository>();
             serviceCollection.ReceivedRegistration<IConversationUsersRepository, ConversationUsersRepository>();
+
+            serviceCollection.ReceivedRegistration<IMessageParser, MessageParser>();
 
             serviceCollection.ReceivedRegistration<IFilter<Message>, PeriodFilter>();
             serviceCollection.ReceivedRegistration<IFilter<Message>, UserFilter>();

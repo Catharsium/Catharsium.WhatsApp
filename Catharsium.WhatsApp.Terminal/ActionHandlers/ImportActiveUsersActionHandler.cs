@@ -8,13 +8,13 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
     public class ImportActiveUsersActionHandler : IActionHandler
     {
         private readonly IActiveUsersRepository activeUsersRepository;
-        private readonly IConversationRepository whatsAppRespository;
+        private readonly IConversationsRepository whatsAppRespository;
         private readonly IConversationUsersRepository conversationUsersRepository;
 
         public string FriendlyName => "Import active users";
 
 
-        public ImportActiveUsersActionHandler(IActiveUsersRepository activeUsersRepository, IConversationRepository whatsAppRespository, IConversationUsersRepository conversationUsersRepository)
+        public ImportActiveUsersActionHandler(IActiveUsersRepository activeUsersRepository, IConversationsRepository whatsAppRespository, IConversationUsersRepository conversationUsersRepository)
         {
             this.activeUsersRepository = activeUsersRepository;
             this.whatsAppRespository = whatsAppRespository;

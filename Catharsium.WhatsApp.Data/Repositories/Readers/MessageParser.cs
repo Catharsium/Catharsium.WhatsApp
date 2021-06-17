@@ -1,6 +1,4 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.Util.IO.Interfaces;
-using Catharsium.WhatsApp.Data._Configuration;
+﻿using Catharsium.Util.IO.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 using System;
@@ -9,67 +7,23 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Catharsium.WhatsApp.Data.Repository
+namespace Catharsium.WhatsApp.Data.Repositories.Readers
 {
-    public class ConversationRepository : IConversationRepository
+    public class MessageParser : IMessageParser
     {
-        private readonly IFileFactory fileFactory;
         private readonly IEqualityComparer<Message> messageEqualityComparer;
-        private readonly IConsole console;
-        private readonly WhatsAppDataSettings settings;
 
 
-        public ConversationRepository(IFileFactory fileFactory, IEqualityComparer<Message> messageEqualityComparer, IConsole console, WhatsAppDataSettings settings)
+        public MessageParser(IEqualityComparer<Message> messageEqualityComparer)
         {
-            this.fileFactory = fileFactory;
             this.messageEqualityComparer = messageEqualityComparer;
-            this.console = console;
-            this.settings = settings;
         }
-
-
-        private IFile[] GetFiles()
-        {
-            return this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt");
-        }
-
-
-        public async Task<List<Conversation>> GetConversations()
-        {
-            var result = new List<Conversation>();
-            var files = this.GetFiles();
-
-            foreach (var file in files) {
-                var regex = new Regex("^(.+) (\\d)$");
-                var match = regex.Match(file.ExtensionlessName);
-                var name = file.ExtensionlessName;
-                if (match.Success && match.Groups.Count == 3) {
-                    name = match.Groups[1].Value;
-                }
-
-                var existingConversation = result.FirstOrDefault(c => c.Name == name);
-                if (existingConversation == null) {
-                    existingConversation = new Conversation {
-                        Name = name,
-                        Files = new List<IFile> { file },
-                        Messages = new List<Message>()
-                    };
-                    result.Add(existingConversation);
-                }
-                else {
-                    existingConversation.Files.Add(file);
-                }
-            }
-
-            return result;
-        }
-
 
 
         public async Task<IEnumerable<Message>> GetMessages(Conversation conversation, IEnumerable<User> users)
         {
             var result = new List<Message>();
-            foreach (var file in conversation.Files) {
+            foreach (var file in conversation.EportFiles) {
                 result.AddRange(await this.GetMessages(file, users));
             }
 

@@ -7,14 +7,14 @@ namespace Catharsium.WhatsApp.Entities.Models
     {
         public string Name { get; set; }
 
-        public List<IFile> Files { get; set; }
+        public List<IFile> EportFiles { get; set; }
 
         public List<Message> Messages { get; set; }
 
 
         public override string ToString()
         {
-            return $"{this.Name.Replace("WhatsApp Chat with ", "")} ({this.Files.Count} files)";
+            return $"{this.Name.Replace("WhatsApp Chat with ", "")} ({this.EportFiles.Count} files)";
         }
     }
 }
