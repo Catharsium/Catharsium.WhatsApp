@@ -30,7 +30,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Basic
         {
             var conversations = await this.respository.GetConversations();
             var selectedConversation = this.console.AskForItem(conversations);
-            var conversationUsers = await this.conversationUsersRepository.ReadFrom(selectedConversation.Name);
+            var conversationUsers = await this.conversationUsersRepository.GetAll(selectedConversation.Name);
             return (await this.messageParser.GetMessages(selectedConversation, conversationUsers)).OrderBy(m => m.Timestamp);
         }
     }

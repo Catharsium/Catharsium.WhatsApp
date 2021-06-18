@@ -6,8 +6,8 @@ namespace Catharsium.WhatsApp.Data.Repository
 {
     public interface IConversationUsersRepository
     {
-        Task<IEnumerable<User>> ReadFrom(string fileName);
+        Task<List<User>> GetAll(string fileName);
 
-        Task UpdateTo(IEnumerable<User> users, string fileName);
+        Task Update(IEnumerable<User> users, string fileName);
     }
 }

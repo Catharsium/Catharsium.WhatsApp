@@ -22,33 +22,20 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
-        private IFile[] GetFiles()
-        {
-            return this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt");
-        }
-
-
         public async Task<List<Conversation>> GetConversations()
         {
             var result = new List<Conversation>();
-            var files = this.GetFiles();
+            var files = await this.GetFiles();
 
             foreach (var file in files) {
-                var regex = new Regex("^(.+) (\\d)$");
-                var match = regex.Match(file.ExtensionlessName);
-                var name = file.ExtensionlessName;
-                if (match.Success && match.Groups.Count == 3) {
-                    name = match.Groups[1].Value;
-                }
-
+                var name = this.GetName(file);
                 var existingConversation = result.FirstOrDefault(c => c.Name == name);
                 if (existingConversation == null) {
-                    existingConversation = new Conversation {
+                    result.Add(new Conversation {
                         Name = name,
                         EportFiles = new List<IFile> { file },
                         Messages = new List<Message>()
-                    };
-                    result.Add(existingConversation);
+                    });
                 }
                 else {
                     existingConversation.EportFiles.Add(file);
@@ -56,6 +43,25 @@ namespace Catharsium.WhatsApp.Data.Repository
             }
 
             return result;
+        }
+
+
+        private Task<IFile[]> GetFiles()
+        {
+            return Task.FromResult(this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt"));
+        }
+
+
+        private string GetName(IFile file)
+        {
+            var regex = new Regex("^(.+) (\\d)$");
+            var match = regex.Match(file.ExtensionlessName);
+            var name = file.ExtensionlessName;
+            if (match.Success && match.Groups.Count == 3) {
+                name = match.Groups[1].Value;
+            }
+
+            return name;
         }
     }
 }

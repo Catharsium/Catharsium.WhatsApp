@@ -32,27 +32,22 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
-        private IFile GetFile(string fileName)
+        public Task<List<User>> GetAll(string fileName)
         {
-            return this.fileFactory.CreateFile($"{this.settings.DataFolder}/Users/{fileName}.json");
+            return Task.Run(() => {
+                var result = new List<User>();
+                var file = this.GetFile(fileName);
+                if (file.Exists) {
+                    result = this.jsonFileReader.ReadFrom<IEnumerable<User>>(file.FullName).ToList();
+                }
+                return result;
+            });
         }
 
 
-        public async Task<IEnumerable<User>> ReadFrom(string fileName)
+        public async Task Update(IEnumerable<User> users, string fileName)
         {
-            var file = this.GetFile(fileName);
-            return this.jsonFileReader.ReadFrom<IEnumerable<User>>(file.FullName);
-        }
-
-
-        public async Task UpdateTo(IEnumerable<User> users, string fileName)
-        {
-            var file = this.GetFile(fileName);
-            var currentUsers = new List<User>();
-            if (file != null && file.Exists) {
-                currentUsers = (await this.ReadFrom(fileName)).ToList();
-                file.Delete();
-            }
+            var currentUsers = await this.GetAll(fileName);
 
             var newUsers = new List<User>();
             foreach (var activeUser in users) {
@@ -72,7 +67,7 @@ namespace Catharsium.WhatsApp.Data.Repository
                 else {
                     newUser = new User {
                         PhoneNumber = currentUser.PhoneNumber,
-                        DisplayName = this.GetNonPhoneNumber(currentUser.DisplayName),
+                        DisplayName = this.GetIfNonPhoneNumber(currentUser.DisplayName),
                         Aliases = new List<string>(),
                         IsActive = true
                     };
@@ -89,11 +84,21 @@ namespace Catharsium.WhatsApp.Data.Repository
                 this.console.WriteLine($"Deleting user '{currentUser}' ");
             }
 
+            var file = this.GetFile(fileName);
+            if (file.Exists) {
+                file.Delete();
+            }
             this.jsonFileWriter.Write(newUsers, file.FullName);
         }
 
 
-        private string GetNonPhoneNumber(string name)
+        private IFile GetFile(string fileName)
+        {
+            return this.fileFactory.CreateFile($"{this.settings.DataFolder}/Users/{fileName}.json");
+        }
+
+
+        private string GetIfNonPhoneNumber(string name)
         {
             return !string.IsNullOrWhiteSpace(name) && !name.StartsWith('+')
                 ? name

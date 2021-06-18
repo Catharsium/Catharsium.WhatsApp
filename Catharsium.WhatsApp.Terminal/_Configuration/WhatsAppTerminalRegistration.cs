@@ -27,9 +27,10 @@ namespace Catharsium.WhatsApp.Ui.Terminal._Configuration
             services.AddScoped<IActionHandler, ActivityListActionHandler>();
             services.AddScoped<IActionHandler, NationalityActionHandler>();
             services.AddScoped<IActionHandler, ActionHandler>(); 
-            services.AddScoped<IActionHandler, MessagesActionHandler>();
+            services.AddScoped<IActionHandler, MessagesActionHandler>(); 
             services.AddScoped<IActionHandler, HourOfTheDayHistogramActionHandler>();
             services.AddScoped<IActionHandler, DayOfTheWeekHistogramActionHandler>();
+            services.AddScoped<IActionHandler, UserStatisticsActionHandler>();
 
             services.AddScoped<IConversationChooser, ConversationChooser>();
             services.AddScoped<IPeriodChooser, PeriodChooser>();

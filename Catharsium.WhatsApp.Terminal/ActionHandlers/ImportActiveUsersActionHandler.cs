@@ -27,7 +27,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             var conversations = await this.whatsAppRespository.GetConversations();
             foreach (var conversation in conversations) {
                 var conversationUsers = this.activeUsersRepository.GetFor(conversation.Name);
-                await this.conversationUsersRepository.UpdateTo(conversationUsers, conversation.Name);
+                await this.conversationUsersRepository.Update(conversationUsers, conversation.Name);
             }
         }
     }
