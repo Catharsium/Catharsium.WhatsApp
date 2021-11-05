@@ -9,19 +9,30 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
     [TestClass]
     public class UserEqualityComparerTests : TestFixture<UserEqualityComparer>
     {
+        #region Fixture
+
+        private User User { get; set; }
+
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            this.User = new User {
+                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
+                DisplayName = "My display name",
+                Conversations = new List<string> { "My conversation 1", "My conversation 2", "My conversation 3" },
+                PhoneNumber = "My phone number"
+            };
+        }
+
+        #endregion
+
         #region Equals
 
         [TestMethod]
         public void Equals_ObjectAndItself_ReturnsTrue()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
-
-            var actual = this.Target.Equals(@object, @object);
+            var actual = this.Target.Equals(this.User, this.User);
             Assert.IsTrue(actual);
         }
 
@@ -29,14 +40,7 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
         [TestMethod]
         public void Equals_NullAndObject_ReturnsFalse()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
-
-            var actual = this.Target.Equals(null, @object);
+            var actual = this.Target.Equals(null, this.User);
             Assert.IsFalse(actual);
         }
 
@@ -44,14 +48,7 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
         [TestMethod]
         public void Equals_ObjectAndNull_ReturnsFalse()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
-
-            var actual = this.Target.Equals(@object, null);
+            var actual = this.Target.Equals(this.User, null);
             Assert.IsFalse(actual);
         }
 
@@ -59,20 +56,14 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
         [TestMethod]
         public void Equals_ObjectAndACopy_ReturnsTrue()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
             var other = new User {
-                Aliases = new List<string>(@object.Aliases),
-                DisplayName = @object.DisplayName,
-                IsActive = @object.IsActive,
-                PhoneNumber = @object.PhoneNumber
+                Aliases = new List<string>(this.User.Aliases),
+                DisplayName = this.User.DisplayName,
+                Conversations = new List<string>(this.User.Conversations),
+                PhoneNumber = this.User.PhoneNumber
             };
 
-            var actual = this.Target.Equals(@object, other);
+            var actual = this.Target.Equals(this.User, other);
             Assert.IsTrue(actual);
         }
 
@@ -80,20 +71,14 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
         [TestMethod]
         public void Equals_DifferentPhoneNumber_ReturnsFalse()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
             var other = new User {
-                Aliases = new List<string>(@object.Aliases),
-                DisplayName = @object.DisplayName,
-                IsActive = @object.IsActive,
-                PhoneNumber = @object.PhoneNumber + "Other"
+                Aliases = new List<string>(this.User.Aliases),
+                DisplayName = this.User.DisplayName,
+                Conversations = new List<string>(this.User.Conversations),
+                PhoneNumber = this.User.PhoneNumber + "Other"
             };
 
-            var actual = this.Target.Equals(@object, other);
+            var actual = this.Target.Equals(this.User, other);
             Assert.IsFalse(actual);
         }
 
@@ -104,15 +89,8 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers
         [TestMethod]
         public void GetHashCode_ValidObject_ReturnsHashCodeOfObject()
         {
-            var @object = new User {
-                Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                DisplayName = "My display name",
-                IsActive = true,
-                PhoneNumber = "My phone number"
-            };
-            var expected = @object.PhoneNumber.GetHashCode();
-
-            var actual = this.Target.GetHashCode(@object);
+            var expected = this.User.PhoneNumber.GetHashCode();
+            var actual = this.Target.GetHashCode(this.User);
             Assert.AreEqual(expected, actual);
         }
 

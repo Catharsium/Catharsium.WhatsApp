@@ -40,8 +40,8 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
 
         public async Task Run()
         {
-            var messages = await this.conversationChooser.AskAndLoad();
             var period = await this.periodChooser.AskForPeriod();
+            var messages = await this.conversationChooser.AskAndLoad();
             messages = messages.Include(new PeriodFilter(period));
 
             var users = messages.Select(m => m.Sender).Distinct(this.userComparer);

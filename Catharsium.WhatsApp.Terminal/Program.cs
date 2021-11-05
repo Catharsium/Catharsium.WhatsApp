@@ -14,7 +14,7 @@ namespace Catharsium.WhatsApp.Ui.Terminal
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, false);
+                .AddJsonFile(@"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json", false, false);
             var configuration = builder.Build();
 
             var serviceProvider = new ServiceCollection()

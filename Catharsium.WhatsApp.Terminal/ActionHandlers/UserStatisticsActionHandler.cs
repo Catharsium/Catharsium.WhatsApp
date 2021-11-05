@@ -4,8 +4,6 @@ using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Data.Repository;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +22,10 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
 
 
         public UserStatisticsActionHandler(
-            IConversationsRepository conversationsRepository, 
-            IConversationUsersRepository conversationUsersRepository, 
-            IMessageParser messageParser, 
-            IEqualityComparer<User> userEqualityComparer, 
+            IConversationsRepository conversationsRepository,
+            IConversationUsersRepository conversationUsersRepository,
+            IMessageParser messageParser,
+            IEqualityComparer<User> userEqualityComparer,
             IConsole console)
         {
             this.conversationsRepository = conversationsRepository;
@@ -42,7 +40,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
         {
             var conversations = await this.conversationsRepository.GetConversations();
             foreach (var conversation in conversations) {
-                var conversationUsers = await this.conversationUsersRepository.GetAll(conversation.Name);
+                var conversationUsers = await this.conversationUsersRepository.Get(conversation.Name);
                 conversation.Messages = (await this.messageParser.GetMessages(conversation, conversationUsers)).OrderBy(m => m.Timestamp).ToList();
             }
 

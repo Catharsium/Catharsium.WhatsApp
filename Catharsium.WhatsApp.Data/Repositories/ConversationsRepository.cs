@@ -22,13 +22,19 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
+        private Task<IFile[]> GetFiles()
+        {
+            return Task.FromResult(this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt"));
+        }
+
+
         public async Task<List<Conversation>> GetConversations()
         {
             var result = new List<Conversation>();
             var files = await this.GetFiles();
 
             foreach (var file in files) {
-                var name = this.GetName(file);
+                var name = this.GetConversationName(file);
                 var existingConversation = result.FirstOrDefault(c => c.Name == name);
                 if (existingConversation == null) {
                     result.Add(new Conversation {
@@ -46,15 +52,9 @@ namespace Catharsium.WhatsApp.Data.Repository
         }
 
 
-        private Task<IFile[]> GetFiles()
+        private string GetConversationName(IFile file)
         {
-            return Task.FromResult(this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt"));
-        }
-
-
-        private string GetName(IFile file)
-        {
-            var regex = new Regex("^(.+) (\\d)$");
+            var regex = new Regex("^(.+) (\\d+)$");
             var match = regex.Match(file.ExtensionlessName);
             var name = file.ExtensionlessName;
             if (match.Success && match.Groups.Count == 3) {

@@ -26,7 +26,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             serviceCollection.AddWhatsAppData(configuration);
             serviceCollection.ReceivedRegistration<IActiveUsersRepository, ActiveUsersRepository>();
             serviceCollection.ReceivedRegistration<IConversationsRepository, ConversationsRepository>();
-            serviceCollection.ReceivedRegistration<IConversationUsersRepository, ConversationUsersRepository>();
+            serviceCollection.ReceivedRegistration<IConversationUsersRepository, UsersRepository>();
 
             serviceCollection.ReceivedRegistration<IMessageParser, MessageParser>();
 

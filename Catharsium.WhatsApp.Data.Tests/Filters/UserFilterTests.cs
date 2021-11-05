@@ -16,7 +16,9 @@ namespace Catharsium.WhatsApp.Data.Tests.Filters
         [TestInitialize]
         public void Initialize()
         {
-            this.User = new User();
+            this.User = new User {
+                PhoneNumber = "My phone number"
+            };
             this.SetDependency(this.User);
         }
 
@@ -34,9 +36,28 @@ namespace Catharsium.WhatsApp.Data.Tests.Filters
 
 
         [TestMethod]
-        public void Includes_MessageWithDifferentUser_ReturnsFalse()
+        public void Includes_UserWithSamePhoneNumber_ReturnsTrue()
         {
-            var message = new Message { Sender = new User() };
+            var message = new Message {
+                Sender = new User {
+                    PhoneNumber = this.User.PhoneNumber
+                }
+            };
+
+            var actual = this.Target.Includes(message);
+            Assert.IsTrue(actual);
+        }
+
+
+        [TestMethod]
+        public void Includes_UserWithDifferentPhoneNumber_ReturnsFalse()
+        {
+            var message = new Message {
+                Sender = new User {
+                    PhoneNumber = this.User.PhoneNumber + "Other"
+                }
+            };
+
             var actual = this.Target.Includes(message);
             Assert.IsFalse(actual);
         }

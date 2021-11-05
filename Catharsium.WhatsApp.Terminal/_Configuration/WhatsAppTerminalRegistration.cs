@@ -23,7 +23,7 @@ namespace Catharsium.WhatsApp.Ui.Terminal._Configuration
             services.AddWhatsAppData(config);
             services.AddWhatsAppEntities(config);
 
-            services.AddScoped<IActionHandler, ImportActiveUsersActionHandler>();
+            services.AddScoped<IActionHandler, UpdateUsersActionHandler>();
             services.AddScoped<IActionHandler, ActivityListActionHandler>();
             services.AddScoped<IActionHandler, NationalityActionHandler>();
             services.AddScoped<IActionHandler, ActionHandler>(); 
@@ -31,6 +31,7 @@ namespace Catharsium.WhatsApp.Ui.Terminal._Configuration
             services.AddScoped<IActionHandler, HourOfTheDayHistogramActionHandler>();
             services.AddScoped<IActionHandler, DayOfTheWeekHistogramActionHandler>();
             services.AddScoped<IActionHandler, UserStatisticsActionHandler>();
+            services.AddScoped<IActionHandler, WordsActionHandler>(); 
 
             services.AddScoped<IConversationChooser, ConversationChooser>();
             services.AddScoped<IPeriodChooser, PeriodChooser>();

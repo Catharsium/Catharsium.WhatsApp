@@ -15,7 +15,7 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models
                 PhoneNumber = "My phone number",
                 DisplayName = "My display name",
                 Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
-                IsActive = true
+                Conversations = new List<string> { "My conversation 1", "My conversation 2", "My conversation 3" }
             };
 
             var actual = new User(user);
@@ -26,7 +26,9 @@ namespace Catharsium.WhatsApp.Entities.Tests.Models
             foreach (var alias in user.Aliases) {
                 Assert.IsTrue(actual.Aliases.Contains(alias));
             }
-            Assert.AreEqual(user.IsActive, actual.IsActive);
+            foreach (var conversation in user.Conversations) {
+                Assert.IsTrue(actual.Conversations.Contains(conversation));
+            }
         }
     }
 }

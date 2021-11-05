@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Catharsium.WhatsApp.Entities.Models
 {
@@ -6,8 +7,8 @@ namespace Catharsium.WhatsApp.Entities.Models
     {
         public string PhoneNumber { get; set; }
         public string DisplayName { get; set; }
-        public bool IsActive { get; set; }
         public List<string> Aliases { get; set; } = new List<string>();
+        public List<string> Conversations { get; set; } = new List<string>();
 
 
         public User() { }
@@ -17,8 +18,8 @@ namespace Catharsium.WhatsApp.Entities.Models
         {
             this.PhoneNumber = user.PhoneNumber;
             this.DisplayName = user.DisplayName;
-            this.IsActive = user.IsActive;
             this.Aliases.AddRange(user.Aliases);
+            this.Conversations.AddRange(user.Conversations);
         }
 
 
@@ -26,7 +27,9 @@ namespace Catharsium.WhatsApp.Entities.Models
         {
             return !string.IsNullOrWhiteSpace(this.DisplayName)
                 ? this.DisplayName
-                : this.PhoneNumber;
+                : !string.IsNullOrWhiteSpace(this.PhoneNumber)
+                    ? this.PhoneNumber
+                    : this.Aliases.FirstOrDefault();
         }
     }
 }

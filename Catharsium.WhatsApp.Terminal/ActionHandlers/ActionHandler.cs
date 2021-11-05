@@ -26,11 +26,11 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
         public async Task Run()
         {
             var messages = await this.conversationChooser.AskAndLoad();
-            var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+            var users = messages.Select(m => m.Sender).Where(m => m != null).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
             var maxName = users.Max(u => u.ToString().Length);
             this.console.WriteLine("Sexyness Per User");
             foreach (var user in users) {
-                if (user.DisplayName == "Bart") {
+                if (user.DisplayName == "Bart van L.") {
                     continue;
                 }
                 this.console.Write($"[1]  ");
@@ -40,8 +40,8 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             }
 
             this.console.Write($"[{users.Count}] ");
-            this.console.Write("Bart");
-            this.console.FillBlock("Bart".Length, maxName + 5);
+            this.console.Write("Bart van L.");
+            this.console.FillBlock("Bart van L.".Length, maxName + 5);
             this.console.WriteLine("  0%");
         }
     }

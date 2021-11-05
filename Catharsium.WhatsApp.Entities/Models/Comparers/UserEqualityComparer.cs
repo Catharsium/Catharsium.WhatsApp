@@ -8,6 +8,8 @@ namespace Catharsium.WhatsApp.Entities.Models.Comparers
         {
             return x != null
                 && y != null
+                && !string.IsNullOrWhiteSpace(x.PhoneNumber)
+                && !string.IsNullOrWhiteSpace(y.PhoneNumber)
                 && x.PhoneNumber == y.PhoneNumber;
         }
 

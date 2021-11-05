@@ -24,7 +24,7 @@ namespace Catharsium.WhatsApp.Terminal.Tests._Configuration
             var configuration = Substitute.For<IConfiguration>();
 
             serviceCollection.AddWhatsAppTerminal(configuration);
-            serviceCollection.ReceivedRegistration<IActionHandler, ImportActiveUsersActionHandler>();
+            serviceCollection.ReceivedRegistration<IActionHandler, UpdateUsersActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, ActivityListActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, NationalityActionHandler>();
             serviceCollection.ReceivedRegistration<IActionHandler, ActionHandler>();

@@ -60,12 +60,12 @@ namespace Catharsium.WhatsApp.Data.Repositories.Readers
                         Sender = users.FirstOrDefault(u => u.Aliases.Any(a => a == sender) || u.PhoneNumber == sender),
                         Text = text
                     };
-                    if (lastMessage.Sender == null) {
-                        lastMessage.Sender = new User {
-                            PhoneNumber = sender,
-                            IsActive = false
-                        };
-                    }
+                    //if (lastMessage.Sender == null) {
+                    //    lastMessage.Sender = new User {
+                    //        PhoneNumber = sender,
+                    //        IsActive = false
+                    //    };
+                    //}
                     result.Add(lastMessage);
                 }
                 else {

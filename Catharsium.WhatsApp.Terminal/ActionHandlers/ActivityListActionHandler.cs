@@ -34,24 +34,21 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             var messages = await this.conversationChooser.AskAndLoad();
             messages = messages.Include(new PeriodFilter(period));
 
-            var x = messages.Select(m => m.Sender);
-            var y = x.Where(a => string.IsNullOrWhiteSpace(a.PhoneNumber));
-            var users = messages.Select(m => m.Sender).Where(u => u.IsActive).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
-            var statistics = users.Select(u => new UserStatistics(u, messages.Where(m => m.Sender == u).OrderBy(m => m.Timestamp))).OrderByDescending(s => s.MessagesPerDay);
+            var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).Where(u => u != null).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+            var statistics = users.Select(u => new UserStatistics(u, messages.Where(m => m.Sender == u).OrderBy(m => m.Timestamp))).OrderByDescending(s => s.MessagesPerDay).ToList();
             var referenceDate = messages.Last().Timestamp;
             var dutchCulture = new CultureInfo("nl-NL");
 
             var fromValue = period.From != DateTime.MinValue ? $"{period.From:dd-MM-yyyy}" : "*";
             var toValue = period.To != DateTime.MaxValue ? $"{period.To:dd-MM-yyyy}" : "*";
 
-            this.console.WriteLine($"Last update:\t{messages.Last().Timestamp:dd-MM-yyyy (HH:mm)}");
-            this.console.WriteLine($"Period:\t\t{fromValue} - {toValue}");
-            this.console.WriteLine($"Message:\t{messages.Count()}");
             this.console.WriteLine($"Users:\t\t{users.Count}");
+            this.console.WriteLine($"Period:\t\t{fromValue} - {toValue}");
             this.console.WriteLine($"\t<Name>\t\t<Messages/Day>\t<Characters>\t<Messages>\t<MessageLength>\t<Last Message>");
-            var counter = 1;
-            foreach (var user in statistics) {
-                this.WriteUser(user, counter++, referenceDate, dutchCulture);
+            this.console.WriteLine();
+
+            for (var i = 0; i < statistics.Count; i++) {
+                this.WriteUser(statistics[i], i + 1, referenceDate, dutchCulture);
             }
         }
 
@@ -60,7 +57,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
         {
             string text;
             this.console.Write(text = $"{rank}.");
-            this.FillSpaces(text.Length, 8);
+            this.FillSpaces(text.Length, 10);
             this.console.Write(text = $"{statistics.User}");
             this.FillSpaces(text.Length, 16);
             this.console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -91,7 +88,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
 
         private void FillSpaces(int length, int total = 15)
         {
-            for (var i = length ; i < total ; i++) {
+            for (var i = length; i < total; i++) {
                 this.console.Write(" ");
             }
         }

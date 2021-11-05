@@ -16,7 +16,7 @@ namespace Catharsium.WhatsApp.Data.Filters
 
         public bool Includes(Message item)
         {
-            return item.Sender == this.user;
+            return item.Sender.PhoneNumber == this.user.PhoneNumber;
         }
     }
 }

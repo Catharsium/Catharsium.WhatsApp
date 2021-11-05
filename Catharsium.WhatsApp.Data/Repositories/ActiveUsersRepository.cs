@@ -21,7 +21,6 @@ namespace Catharsium.WhatsApp.Data.Repository
         {
             var result = new List<User>();
             if (this.settings.ActiveUsers.ContainsKey(conversationName)) {
-
                 var list = this.settings.ActiveUsers[conversationName];
                 result = list.Split(", ").Select(u => new User {
                     Aliases = u.StartsWith('+') ? new List<string>() : new List<string> { u },
