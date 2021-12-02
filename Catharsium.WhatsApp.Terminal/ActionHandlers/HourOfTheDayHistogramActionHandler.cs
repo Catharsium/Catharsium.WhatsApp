@@ -4,6 +4,7 @@ using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using System;
 using System.Collections.Generic;
@@ -44,10 +45,10 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers
             var messages = await this.conversationChooser.AskAndLoad();
             messages = messages.Include(new PeriodFilter(period));
 
-            var users = messages.Select(m => m.Sender).Distinct(this.userComparer);
+            var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).Where(u => u != null).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
             var user = this.console.AskForItem(users);
             if (user != null) {
-                messages = messages.Include(new UserFilter(user));
+                messages = messages.Where(m => m.Sender != null).Include(new UserFilter(user));
             }
 
             var groups = messages.GroupBy(m => m.Timestamp.Hour).Select(g => new { g.First().Timestamp.Hour, Messages = g.Count() }).OrderBy(g => g.Hour);
