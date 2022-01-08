@@ -1,11 +1,7 @@
-﻿using Catharsium.WhatsApp.Entities.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Terminal.Terminal.Steps;
 
-namespace Catharsium.WhatsApp.Entities.Terminal.Steps
+public interface IConversationChooser
 {
-    public interface IConversationChooser
-    {
-        Task<IEnumerable<Message>> AskAndLoad();
-    }
+    Task<IEnumerable<Message>> AskAndLoad();
 }

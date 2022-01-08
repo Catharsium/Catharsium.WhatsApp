@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace Catharsium.WhatsApp.Terminal.Models;
 
-namespace Catharsium.WhatsApp.Entities.Models
+public class Period
 {
-    public class Period
-    {
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
-    }
+    public DateTime From { get; set; }
+    public DateTime To { get; set; }
 }

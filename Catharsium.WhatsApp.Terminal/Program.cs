@@ -1,29 +1,23 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Ui.Terminal._Configuration;
+using Catharsium.WhatsApp.Terminal._Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Threading.Tasks;
+namespace Catharsium.WhatsApp.Terminal;
 
-namespace Catharsium.WhatsApp.Ui.Terminal
+class Program
 {
-    class Program
+    static async Task Main(string[] args)
     {
-        static async Task Main(string[] args)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json", false, false);
-            var configuration = builder.Build();
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile(@"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json", false, false);
+        var configuration = builder.Build();
 
-            var serviceProvider = new ServiceCollection()
-                .AddLogging(configure => configure.AddConsole())
-                .AddWhatsAppTerminal(configuration)
-                .BuildServiceProvider();
+        var serviceProvider = new ServiceCollection()
+            .AddWhatsAppTerminal(configuration)
+            .BuildServiceProvider();
 
-            var chooseOperationActionHandler = serviceProvider.GetService<IChooseActionHandler>();
-            await chooseOperationActionHandler.Run();
-        }
+        var chooseOperationActionHandler = serviceProvider.GetService<IChooseActionHandler>();
+        await chooseOperationActionHandler.Run();
     }
 }

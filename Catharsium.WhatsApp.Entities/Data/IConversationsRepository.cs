@@ -1,11 +1,7 @@
-﻿using Catharsium.WhatsApp.Entities.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Terminal.Data;
 
-namespace Catharsium.WhatsApp.Entities.Data
+public interface IConversationsRepository
 {
-    public interface IConversationsRepository
-    {
-        Task<List<Conversation>> GetConversations();
-    }
+    Task<List<Conversation>> GetConversations();
 }

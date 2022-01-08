@@ -1,15 +1,11 @@
-﻿using Catharsium.WhatsApp.Entities.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Terminal.Data;
 
-namespace Catharsium.WhatsApp.Data.Repository
+public interface IConversationUsersRepository
 {
-    public interface IConversationUsersRepository
-    {
-        Task<List<User>> Get(string conversationName);
+    Task<List<User>> Get(string conversationName);
 
-        Task<List<User>> Add(IEnumerable<User> users, string conversationName);
+    Task<List<User>> Add(IEnumerable<User> users, string conversationName);
 
-        Task<List<User>> Remove(IEnumerable<User> users, string conversationName);
-    }
+    Task<List<User>> Remove(IEnumerable<User> users, string conversationName);
 }

@@ -1,10 +1,8 @@
-﻿using Catharsium.WhatsApp.Entities.Models;
-using System.Collections.Generic;
+﻿using Catharsium.WhatsApp.Terminal.Models;
 
-namespace Catharsium.WhatsApp.Entities.Data
+namespace Catharsium.WhatsApp.Terminal.Data;
+
+public interface IActiveUsersRepository
 {
-    public interface IActiveUsersRepository
-    {
-        List<User> GetFor(string conversationName);
-    }
+    List<User> GetFor(string conversationName);
 }

@@ -1,6 +1,5 @@
-﻿namespace Catharsium.WhatsApp.Data._Configuration
+﻿namespace Catharsium.WhatsApp.Terminal._Configuration;
+
+public class WhatsAppEntitiesSettings
 {
-    public class WhatsAppEntitiesSettings
-    {
-    }
 }

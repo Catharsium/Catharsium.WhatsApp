@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <DebugType>embedded</DebugType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Catharsium.Util.IO" Version="2021.6.4.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Util\" />
+    <PackageReference Include="Catharsium.Util.IO" Version="2021.11.9.19" />
   </ItemGroup>
 
 </Project>

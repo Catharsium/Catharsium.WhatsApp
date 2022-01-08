@@ -1,10 +1,7 @@
-﻿using Catharsium.WhatsApp.Entities.Models;
-using System.Threading.Tasks;
+﻿using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Terminal.Terminal.Steps;
 
-namespace Catharsium.WhatsApp.Entities.Terminal.Steps
+public interface IPeriodChooser
 {
-    public interface IPeriodChooser
-    {
-        Task<Period> AskForPeriod();
-    }
+    Task<Period> AskForPeriod();
 }

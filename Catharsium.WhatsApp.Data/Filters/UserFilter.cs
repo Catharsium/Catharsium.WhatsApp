@@ -1,22 +1,20 @@
 ﻿using Catharsium.Util.Filters;
-using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Data.Filters;
 
-namespace Catharsium.WhatsApp.Data.Filters
+public class UserFilter : IFilter<Message>
 {
-    public class UserFilter : IFilter<Message>
+    private readonly User user;
+
+
+    public UserFilter(User user)
     {
-        private readonly User user;
+        this.user = user;
+    }
 
 
-        public UserFilter(User user)
-        {
-            this.user = user;
-        }
-
-
-        public bool Includes(Message item)
-        {
-            return item.Sender.PhoneNumber == this.user.PhoneNumber;
-        }
+    public bool Includes(Message item)
+    {
+        return item.Sender.PhoneNumber == this.user.PhoneNumber;
     }
 }

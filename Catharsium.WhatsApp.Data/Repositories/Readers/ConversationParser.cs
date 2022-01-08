@@ -1,14 +1,11 @@
 ﻿using Catharsium.Util.IO.Interfaces;
-using Catharsium.WhatsApp.Entities.Models;
-using System;
+using Catharsium.WhatsApp.Terminal.Models;
+namespace Catharsium.WhatsApp.Data.Repositories.Readers;
 
-namespace Catharsium.WhatsApp.Data.Repository.Util
+public class ConversationParser
 {
-    public class ConversationParser
+    private Conversation Parse(IFile file)
     {
-        private Conversation Parse(IFile file)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }
