@@ -1,8 +1,7 @@
 ﻿using Catharsium.WhatsApp.Entities.Models;
-
 namespace Catharsium.WhatsApp.Entities.Data;
 
-public interface IActiveUsersRepository
+public interface IExportFilesRepository
 {
-    List<User> GetFor(string conversationName);
+    Task<List<Conversation>> GetConversations();
 }

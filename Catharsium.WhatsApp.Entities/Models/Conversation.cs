@@ -1,17 +1,23 @@
-﻿using Catharsium.Util.IO.Interfaces;
-namespace Catharsium.WhatsApp.Terminal.Models;
+﻿namespace Catharsium.WhatsApp.Entities.Models;
 
 public class Conversation
 {
-    public string Name { get; set; }
+    private string _name;
+    public string Name
+    {
+        get {
+            return _name;
+        }
+        set {
+            this._name = value.Replace("WhatsApp Chat with ", "");
+        }
+    }
 
-    public List<IFile> EportFiles { get; set; }
-
-    public List<Message> Messages { get; set; }
+    public List<Message> Messages { get; set; } = new List<Message>();
 
 
     public override string ToString()
     {
-        return $"{this.Name.Replace("WhatsApp Chat with ", "")} ({this.EportFiles.Count} files)";
+        return $"{this.Name} ({this.Messages.Count} messages)";
     }
 }

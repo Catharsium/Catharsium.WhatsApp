@@ -1,9 +1,9 @@
 ﻿using Catharsium.Util.Testing;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-namespace Catharsium.WhatsApp.Terminal.Tests.Models.Comparers;
+namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers;
 
 [TestClass]
 public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
@@ -15,7 +15,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
 
@@ -29,7 +29,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
 
@@ -43,7 +43,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
 
@@ -57,7 +57,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
         var other = new Message {
@@ -76,7 +76,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
         var other = new Message {
@@ -95,12 +95,12 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
         var other = new Message {
             Timestamp = @object.Timestamp,
-            Sender = new User(),
+            Sender = @object.Sender + "Other",
             Text = @object.Text
         };
 
@@ -114,7 +114,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
         var other = new Message {
@@ -136,7 +136,7 @@ public class MessageEqualityComparerTests : TestFixture<MessageEqualityComparer>
     {
         var @object = new Message {
             Timestamp = DateTime.Now,
-            Sender = new User(),
+            Sender = "My sender",
             Text = "My text"
         };
         var expected = @object.Text.GetHashCode();

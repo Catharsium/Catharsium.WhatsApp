@@ -1,26 +1,31 @@
 ﻿using Catharsium.Util.IO.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
-using Catharsium.WhatsApp.Terminal.Data;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using System.Text.RegularExpressions;
 namespace Catharsium.WhatsApp.Data.Repositories;
 
-public class ConversationsRepository : IConversationsRepository
+public class ExportFilesRepository : IExportFilesRepository
 {
     private readonly IFileFactory fileFactory;
+    private readonly IMessageParser messageParser;
+    private readonly IActiveUsersRepository activeUsersRepository;
     private readonly WhatsAppDataSettings settings;
 
 
-    public ConversationsRepository(IFileFactory fileFactory, WhatsAppDataSettings settings)
+    public ExportFilesRepository(IFileFactory fileFactory, IMessageParser messageParser, IActiveUsersRepository activeUsersRepository, WhatsAppDataSettings settings)
     {
         this.fileFactory = fileFactory;
+        this.messageParser = messageParser;
+        this.activeUsersRepository = activeUsersRepository;
         this.settings = settings;
     }
 
 
     private Task<IFile[]> GetFiles()
     {
-        return Task.FromResult(this.fileFactory.CreateDirectory(this.settings.DataFolder).GetFiles("*.txt"));
+        return Task.FromResult(this.fileFactory.CreateDirectory(this.settings.ExportFilesFolder).GetFiles("*.txt"));
     }
 
 
@@ -31,17 +36,17 @@ public class ConversationsRepository : IConversationsRepository
 
         foreach (var file in files) {
             var name = this.GetConversationName(file);
-            var existingConversation = result.FirstOrDefault(c => c.Name == name);
-            if (existingConversation == null) {
-                result.Add(new Conversation {
+            var conversation = result.FirstOrDefault(c => c.Name == name);
+            if (conversation == null) {
+                conversation = new Conversation {
                     Name = name,
-                    EportFiles = new List<IFile> { file },
                     Messages = new List<Message>()
-                });
+                };
+                result.Add(conversation);
             }
-            else {
-                existingConversation.EportFiles.Add(file);
-            }
+
+            conversation.Messages.AddRange(await this.messageParser.GetMessages(file));
+            conversation.Messages = conversation.Messages.Distinct(new MessageEqualityComparer()).ToList();
         }
 
         return result;

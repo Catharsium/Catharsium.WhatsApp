@@ -1,6 +1,6 @@
 ﻿using Catharsium.Util.Testing;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 namespace Catharsium.WhatsApp.Data.Tests.Filters;

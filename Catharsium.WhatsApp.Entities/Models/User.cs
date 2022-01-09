@@ -1,4 +1,4 @@
-﻿namespace Catharsium.WhatsApp.Terminal.Models;
+﻿namespace Catharsium.WhatsApp.Entities.Models;
 
 public class User
 {
@@ -9,6 +9,17 @@ public class User
 
 
     public User() { }
+
+
+    public User(string user)
+    {
+        if (user.StartsWith('+')) {
+            this.PhoneNumber = user;
+        }
+        else {
+            this.Aliases.Add(user);
+        }
+    }
 
 
     public User(User user)

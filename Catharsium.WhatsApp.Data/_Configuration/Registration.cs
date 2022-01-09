@@ -5,8 +5,8 @@ using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Data.Logic;
 using Catharsium.WhatsApp.Data.Repositories;
 using Catharsium.WhatsApp.Data.Repositories.Readers;
-using Catharsium.WhatsApp.Terminal.Data;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace Catharsium.WhatsApp.Data._Configuration;
@@ -21,8 +21,9 @@ public static class Registration
         services.AddIoUtilities(config);
 
         services.AddScoped<IActiveUsersRepository, ActiveUsersRepository>();
-        services.AddScoped<IConversationsRepository, ConversationsRepository>();
+        services.AddScoped<IExportFilesRepository, ExportFilesRepository>();
         services.AddScoped<IConversationUsersRepository, UsersRepository>();
+        services.AddScoped<IConversationRepository, ConversationRepository>();
 
         services.AddScoped<IMessageParser, MessageParser>();
 

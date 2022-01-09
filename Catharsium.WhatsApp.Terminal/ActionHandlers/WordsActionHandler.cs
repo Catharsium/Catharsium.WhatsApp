@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Terminal.Data;
+using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
@@ -21,8 +21,8 @@ public class WordsActionHandler : IActionHandler
 
     public async Task Run()
     {
-        var messages = await this.conversationChooser.AskAndLoad();
-        var text = messages.ToList()[1].Text;
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var text = conversation.Messages.ToList()[1].Text;
         this.messageAnalyzer.GetEmoticons(text);
     }
 }

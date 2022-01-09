@@ -1,9 +1,9 @@
 ﻿using Catharsium.Util.Testing;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-namespace Catharsium.WhatsApp.Terminal.Tests.Models.Comparers;
+namespace Catharsium.WhatsApp.Entities.Tests.Models.Comparers;
 
 [TestClass]
 public class UserEqualityComparerTests : TestFixture<UserEqualityComparer>
@@ -16,11 +16,10 @@ public class UserEqualityComparerTests : TestFixture<UserEqualityComparer>
     [TestInitialize]
     public void Initialize()
     {
-        this.User = new User {
+        this.User = new User("+0123456789") {
             Aliases = new List<string> { "My alias 1", "My alias 2", "My alias 3" },
             DisplayName = "My display name",
-            Conversations = new List<string> { "My conversation 1", "My conversation 2", "My conversation 3" },
-            PhoneNumber = "My phone number"
+            Conversations = new List<string> { "My conversation 1", "My conversation 2", "My conversation 3" }
         };
     }
 
@@ -55,11 +54,10 @@ public class UserEqualityComparerTests : TestFixture<UserEqualityComparer>
     [TestMethod]
     public void Equals_ObjectAndACopy_ReturnsTrue()
     {
-        var other = new User {
+        var other = new User(this.User.PhoneNumber) {
             Aliases = new List<string>(this.User.Aliases),
             DisplayName = this.User.DisplayName,
-            Conversations = new List<string>(this.User.Conversations),
-            PhoneNumber = this.User.PhoneNumber
+            Conversations = new List<string>(this.User.Conversations)
         };
 
         var actual = this.Target.Equals(this.User, other);
@@ -70,11 +68,10 @@ public class UserEqualityComparerTests : TestFixture<UserEqualityComparer>
     [TestMethod]
     public void Equals_DifferentPhoneNumber_ReturnsFalse()
     {
-        var other = new User {
+        var other = new User(this.User.PhoneNumber + "Other") {
             Aliases = new List<string>(this.User.Aliases),
             DisplayName = this.User.DisplayName,
-            Conversations = new List<string>(this.User.Conversations),
-            PhoneNumber = this.User.PhoneNumber + "Other"
+            Conversations = new List<string>(this.User.Conversations)
         };
 
         var actual = this.Target.Equals(this.User, other);

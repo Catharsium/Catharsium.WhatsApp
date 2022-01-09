@@ -1,7 +1,7 @@
 ﻿using Catharsium.Util.Configuration.Extensions;
 using Catharsium.Util.IO._Configuration;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace Catharsium.WhatsApp.Terminal._Configuration;

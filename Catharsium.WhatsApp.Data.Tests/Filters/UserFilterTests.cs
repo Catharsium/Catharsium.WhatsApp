@@ -1,7 +1,8 @@
 ﻿using Catharsium.Util.Testing;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 namespace Catharsium.WhatsApp.Data.Tests.Filters;
 
 [TestClass]
@@ -15,10 +16,10 @@ public class UserFilterTests : TestFixture<UserFilter>
     [TestInitialize]
     public void Initialize()
     {
-        this.User = new User {
-            PhoneNumber = "My phone number"
+        this.User = new User("+0123456789") {
+            Aliases = new List<string> { "My alias" }
         };
-        this.SetDependency(this.User);
+        this.SetDependency(new[] { this.User });
     }
 
     #endregion
@@ -26,37 +27,36 @@ public class UserFilterTests : TestFixture<UserFilter>
     #region Includes
 
     [TestMethod]
-    public void Includes_MessageWithExpectedUser_ReturnsTrue()
+    public void Includes_SamePhoneNumber_ReturnsTrue()
     {
-        var message = new Message { Sender = this.User };
+        var message = new Message { Sender = this.User.PhoneNumber };
         var actual = this.Target.Includes(message);
         Assert.IsTrue(actual);
     }
 
 
     [TestMethod]
-    public void Includes_UserWithSamePhoneNumber_ReturnsTrue()
+    public void Includes_SameAlias_ReturnsTrue()
     {
-        var message = new Message {
-            Sender = new User {
-                PhoneNumber = this.User.PhoneNumber
-            }
-        };
-
+        var message = new Message { Sender = this.User.Aliases[0] };
         var actual = this.Target.Includes(message);
         Assert.IsTrue(actual);
     }
 
 
     [TestMethod]
-    public void Includes_UserWithDifferentPhoneNumber_ReturnsFalse()
+    public void Includes_DifferentPhoneNumber_ReturnsFalse()
     {
-        var message = new Message {
-            Sender = new User {
-                PhoneNumber = this.User.PhoneNumber + "Other"
-            }
-        };
+        var message = new Message { Sender = this.User.PhoneNumber + "Other" };
+        var actual = this.Target.Includes(message);
+        Assert.IsFalse(actual);
+    }
 
+
+    [TestMethod]
+    public void Includes_DifferentAlias_ReturnsFalse()
+    {
+        var message = new Message { Sender = this.User.Aliases + "Other" };
         var actual = this.Target.Includes(message);
         Assert.IsFalse(actual);
     }

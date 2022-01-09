@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 

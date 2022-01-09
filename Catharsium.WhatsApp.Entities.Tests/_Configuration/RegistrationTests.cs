@@ -1,8 +1,8 @@
 ﻿using Catharsium.Util.IO.Interfaces;
 using Catharsium.Util.Testing.Extensions;
+using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Catharsium.WhatsApp.Terminal._Configuration;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

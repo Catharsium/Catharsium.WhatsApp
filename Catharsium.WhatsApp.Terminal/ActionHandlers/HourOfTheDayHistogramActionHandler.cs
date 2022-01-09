@@ -3,14 +3,15 @@ using Catharsium.Math.Graph.Models;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class HourOfTheDayHistogramActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IPeriodChooser periodChooser;
     private readonly IEqualityComparer<User> userComparer;
     private readonly IGraph graph;
@@ -21,12 +22,14 @@ public class HourOfTheDayHistogramActionHandler : IActionHandler
 
     public HourOfTheDayHistogramActionHandler(
         IConversationChooser conversationChooser,
+        IConversationUsersRepository conversationUsersRepository,
         IPeriodChooser periodChooser,
         IEqualityComparer<User> userComparer,
         IGraph graph,
         IConsole console)
     {
         this.conversationChooser = conversationChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
         this.userComparer = userComparer;
         this.graph = graph;
@@ -37,13 +40,13 @@ public class HourOfTheDayHistogramActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var messages = await this.conversationChooser.AskAndLoad();
-        messages = messages.Include(new PeriodFilter(period));
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
 
-        var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).Where(u => u != null).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+        var users = await this.conversationUsersRepository.Get(conversation.Name);
         var user = this.console.AskForItem(users);
         if (user != null) {
-            messages = messages.Where(m => m.Sender != null).Include(new UserFilter(user));
+            messages = messages.Include(new UserFilter(user));
         }
 
         var groups = messages.GroupBy(m => m.Timestamp.Hour).Select(g => new { g.First().Timestamp.Hour, Messages = g.Count() }).OrderBy(g => g.Hour);
@@ -60,7 +63,7 @@ public class HourOfTheDayHistogramActionHandler : IActionHandler
         var fromValue = period.From != DateTime.MinValue ? $"{period.From:dd-MM-yyyy}" : "*";
         var toValue = period.To != DateTime.MaxValue ? $"{period.To:dd-MM-yyyy}" : "*";
 
-        this.console.WriteLine($"Last update:\t{messages.Last().Timestamp:dd-MM-yyyy (HH:mm)}");
+        this.console.WriteLine($"Last update:\t{messages.Max(m => m.Timestamp):dd-MM-yyyy (HH:mm)}");
         if (user != null) {
             this.console.WriteLine($"User:\t{user}");
         }

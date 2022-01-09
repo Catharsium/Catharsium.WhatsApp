@@ -1,29 +1,29 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class ActionHandler : IActionHandler
+public class JokeActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
-    private readonly IPeriodChooser periodChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IConsole console;
 
-    public string FriendlyName => "test";
+    public string FriendlyName => "Joke";
 
 
-    public ActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IConsole console)
+    public JokeActionHandler(IConversationChooser conversationChooser, IConversationUsersRepository conversationUsersRepository, IConsole console)
     {
         this.conversationChooser = conversationChooser;
-        this.periodChooser = periodChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.console = console;
     }
 
 
     public async Task Run()
     {
-        var messages = await this.conversationChooser.AskAndLoad();
-        var users = messages.Select(m => m.Sender).Where(m => m != null).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var users = await this.conversationUsersRepository.Get(conversation.Name);
         var maxName = users.Max(u => u.ToString().Length);
         this.console.WriteLine("Sexyness Per User");
         foreach (var user in users) {

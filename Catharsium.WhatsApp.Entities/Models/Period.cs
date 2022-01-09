@@ -1,4 +1,4 @@
-﻿namespace Catharsium.WhatsApp.Terminal.Models;
+﻿namespace Catharsium.WhatsApp.Entities.Models;
 
 public class Period
 {

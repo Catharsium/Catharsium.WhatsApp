@@ -1,4 +1,4 @@
-﻿namespace Catharsium.WhatsApp.Terminal.Models.Comparers;
+﻿namespace Catharsium.WhatsApp.Entities.Models.Comparers;
 
 public class UserEqualityComparer : IEqualityComparer<User>
 {

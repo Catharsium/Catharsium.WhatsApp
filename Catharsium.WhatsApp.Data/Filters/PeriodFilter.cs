@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Filters;
 
 public class PeriodFilter : IFilter<Message>

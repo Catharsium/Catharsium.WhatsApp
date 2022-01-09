@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Interfaces;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Repositories.Readers;
 
 public class ConversationParser

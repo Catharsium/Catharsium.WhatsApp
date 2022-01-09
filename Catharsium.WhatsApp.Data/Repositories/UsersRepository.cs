@@ -1,8 +1,8 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.Util.IO.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
-using Catharsium.WhatsApp.Terminal.Data;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Repositories;
 
 public class UsersRepository : IConversationUsersRepository
@@ -57,7 +57,7 @@ public class UsersRepository : IConversationUsersRepository
 
     private IFile GetFile()
     {
-        return this.fileFactory.CreateFile($"{this.settings.DataFolder}/Data/AllUsers.json");
+        return this.fileFactory.CreateFile($"{this.settings.ConversationsFolder}/AllUsers.json");
     }
 
 
@@ -75,8 +75,7 @@ public class UsersRepository : IConversationUsersRepository
             var currentUser = this.GetCurrentUser(activeUser, conversationName);
             User newUser;
             if (currentUser == null) {
-                newUser = new User {
-                    PhoneNumber = activeUser.PhoneNumber,
+                newUser = new User(activeUser.PhoneNumber) {
                     DisplayName = activeUser.DisplayName,
                     Aliases = activeUser.Aliases ?? new List<string>(),
                     Conversations = new List<string> { conversationName }
@@ -84,8 +83,7 @@ public class UsersRepository : IConversationUsersRepository
                 this.console.WriteLine($"Adding new user '{newUser}'");
             }
             else {
-                newUser = new User {
-                    PhoneNumber = currentUser.PhoneNumber,
+                newUser = new User(currentUser.PhoneNumber) {
                     DisplayName = GetIfNonPhoneNumber(currentUser.DisplayName),
                     Aliases = new List<string>(),
                     Conversations = currentUser.Conversations
@@ -112,7 +110,7 @@ public class UsersRepository : IConversationUsersRepository
     }
 
 
-    private Task WriteAll()
+    public Task Save()
     {
         return Task.Run(() => {
             var file = this.GetFile();

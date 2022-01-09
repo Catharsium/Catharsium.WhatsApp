@@ -3,16 +3,15 @@ using Catharsium.Math.Graph.Models;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class DayOfTheWeekHistogramActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IPeriodChooser periodChooser;
-    private readonly IEqualityComparer<User> userComparer;
     private readonly IGraph graph;
     private readonly IConsole console;
 
@@ -21,14 +20,14 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
 
     public DayOfTheWeekHistogramActionHandler(
         IConversationChooser conversationChooser,
+        IConversationUsersRepository conversationUsersRepository,
         IPeriodChooser periodChooser,
-        IEqualityComparer<User> userComparer,
         IGraph graph,
         IConsole console)
     {
         this.conversationChooser = conversationChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
-        this.userComparer = userComparer;
         this.graph = graph;
         this.console = console;
     }
@@ -37,13 +36,13 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var messages = await this.conversationChooser.AskAndLoad();
-        messages = messages.Include(new PeriodFilter(period));
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
 
-        var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).Where(u => u != null).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+        var users = await this.conversationUsersRepository.Get(conversation.Name);
         var user = this.console.AskForItem(users);
         if (user != null) {
-            messages = messages.Where(m => m.Sender != null).Include(new UserFilter(user));
+            messages = messages.Include(new UserFilter(user));
         }
 
         var groups = messages.GroupBy(m => m.Timestamp.DayOfWeek).Select(g => new { g.First().Timestamp.DayOfWeek, Messages = g.Count() }).OrderBy(g => g.DayOfWeek);

@@ -1,4 +1,5 @@
-﻿using Catharsium.WhatsApp.Terminal.Models;
+﻿using Catharsium.WhatsApp.Entities.Models;
+
 namespace Catharsium.WhatsApp.Terminal.Terminal.Steps;
 
 public interface IPeriodChooser

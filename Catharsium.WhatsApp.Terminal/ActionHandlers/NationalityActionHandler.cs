@@ -1,7 +1,7 @@
 ﻿using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
@@ -24,17 +24,17 @@ public class NationalityActionHandler : IActionHandler
 
     public async Task Run()
     {
+        var conversation = await this.conversationChooser.AskAndLoad();
         var period = await this.periodChooser.AskForPeriod();
-        var messages = await this.conversationChooser.AskAndLoad();
-        messages = messages.Include(new PeriodFilter(period));
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
 
-        var groups = messages.GroupBy(m => m.Sender.PhoneNumber.Substring(0, 3));
+        //var groups = messages.GroupBy(m => m.Sender.PhoneNumber[..3]);
 
-        foreach (var group in groups) {
-            var netCode = group.First().Sender.PhoneNumber.Substring(0, 3);
-            var users = group.Select(m => m.Sender).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
-            var messagesPerUser = group.Count() / (double)users.Count;
-            this.console.WriteLine($"{netCode} ({users.Count} users) - {group.Count()} messages ({messagesPerUser:n2} per user)");
-        }
+        //foreach (var group in groups) {
+        //    var netCode = group.First().Sender.PhoneNumber[..3];
+        //    var users = group.Select(m => m.Sender).Distinct(new UserEqualityComparer()).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
+        //    var messagesPerUser = group.Count() / (double)users.Count;
+        //    this.console.WriteLine($"{netCode} ({users.Count} users) - {group.Count()} messages ({messagesPerUser:n2} per user)");
+        //}
     }
 }

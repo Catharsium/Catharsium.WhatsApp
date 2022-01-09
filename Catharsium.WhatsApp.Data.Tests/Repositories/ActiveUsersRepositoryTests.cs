@@ -1,7 +1,7 @@
 ﻿using Catharsium.Util.Testing;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Data.Repositories;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +21,8 @@ public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
     [TestInitialize]
     public void Initialize()
     {
-        this.AliasUser = new User {
-            Aliases = new List<string> { "My alias" }
-        };
-        this.PhoneUser = new User {
-            PhoneNumber = "+My phone number"
-        };
+        this.AliasUser = new User("My alias");
+        this.PhoneUser = new User("+0123456789");
 
         var settings = new WhatsAppDataSettings {
             ActiveUsers = new Dictionary<string, string> {

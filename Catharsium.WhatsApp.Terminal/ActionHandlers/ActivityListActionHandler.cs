@@ -1,8 +1,8 @@
 ﻿using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 using System.Globalization;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
@@ -10,15 +10,17 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 public class ActivityListActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IPeriodChooser periodChooser;
     private readonly IConsole console;
 
     public string FriendlyName => "Activity list";
 
 
-    public ActivityListActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IConsole console)
+    public ActivityListActionHandler(IConversationChooser conversationChooser, IConversationUsersRepository conversationUsersRepository, IPeriodChooser periodChooser, IConsole console)
     {
         this.conversationChooser = conversationChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
         this.console = console;
     }
@@ -27,11 +29,19 @@ public class ActivityListActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var messages = await this.conversationChooser.AskAndLoad();
-        messages = messages.Include(new PeriodFilter(period));
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
+        var users = await this.conversationUsersRepository.Get(conversation.Name);
 
-        var users = messages.Select(m => m.Sender).Distinct(new UserEqualityComparer()).Where(u => u != null).OrderBy(u => messages.Where(m => m.Sender == u).Count()).ToList();
-        var statistics = users.Select(u => new UserStatistics(u, messages.Where(m => m.Sender == u).OrderBy(m => m.Timestamp))).OrderByDescending(s => s.MessagesPerDay).ToList();
+        var statistics = new List<UserStatistics>();
+        foreach (var user in users) {
+            var userMessages = messages.Include(new UserFilter(user)).OrderBy(m => m.Timestamp);
+            if (userMessages.Any()) {
+                var userStatistics = new UserStatistics(user, userMessages);
+                statistics.Add(userStatistics);
+            }
+        }
+        statistics = statistics.OrderByDescending(s => s.MessagesPerDay).ToList();
         var referenceDate = messages.Last().Timestamp;
         var dutchCulture = new CultureInfo("nl-NL");
 

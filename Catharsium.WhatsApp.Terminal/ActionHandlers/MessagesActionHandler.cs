@@ -1,25 +1,29 @@
 ﻿using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Terminal.Models;
+using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class MessagesActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IPeriodChooser periodChooser;
-    private readonly IEqualityComparer<User> userEqualityComparer;
     private readonly IConsole console;
 
     public string FriendlyName => "Messages";
 
 
-    public MessagesActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IEqualityComparer<User> userEqualityComparer, IConsole console)
+    public MessagesActionHandler(
+        IConversationChooser conversationChooser,
+        IConversationUsersRepository conversationUsersRepository,
+        IPeriodChooser periodChooser,
+        IConsole console)
     {
         this.conversationChooser = conversationChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
-        this.userEqualityComparer = userEqualityComparer;
         this.console = console;
     }
 
@@ -27,9 +31,10 @@ public class MessagesActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var messages = await this.conversationChooser.AskAndLoad();
-        messages = messages.Include(new PeriodFilter(period));
-        var users = messages.Select(m => m.Sender).Distinct(this.userEqualityComparer);
+        var conversation = await this.conversationChooser.AskAndLoad();
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
+
+        var users = await this.conversationUsersRepository.Get(conversation.Name);
         var user = this.console.AskForItem(users);
         if (user != null) {
             messages = messages.Include(new UserFilter(user));

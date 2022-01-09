@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Terminal.Data;
+using Catharsium.WhatsApp.Entities.Data;
 namespace Catharsium.WhatsApp.Data.Logic;
 
 public class MessageAnalyzer : IMessageAnalyzer

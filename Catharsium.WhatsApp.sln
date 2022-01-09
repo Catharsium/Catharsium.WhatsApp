@@ -3,20 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Terminal", "Catharsium.WhatsApp.Terminal\Catharsium.WhatsApp.Terminal.csproj", "{555DB708-5CA3-4F2D-A281-A80C1BFE0828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Terminal", "Catharsium.WhatsApp.Terminal\Catharsium.WhatsApp.Terminal.csproj", "{555DB708-5CA3-4F2D-A281-A80C1BFE0828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Terminal.Tests", "Catharsium.WhatsApp.Terminal.Tests\Catharsium.WhatsApp.Terminal.Tests.csproj", "{50858A2C-4DD8-49F2-BC29-CA03E8781861}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Terminal.Tests", "Catharsium.WhatsApp.Terminal.Tests\Catharsium.WhatsApp.Terminal.Tests.csproj", "{50858A2C-4DD8-49F2-BC29-CA03E8781861}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Data", "Catharsium.WhatsApp.Data\Catharsium.WhatsApp.Data.csproj", "{9E85DE80-B07A-4786-B342-8EAB97DEF1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Data", "Catharsium.WhatsApp.Data\Catharsium.WhatsApp.Data.csproj", "{9E85DE80-B07A-4786-B342-8EAB97DEF1CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Data.Tests", "Catharsium.WhatsApp.Data.Tests\Catharsium.WhatsApp.Data.Tests.csproj", "{85F5708B-7910-4233-A096-C6575422E291}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Data.Tests", "Catharsium.WhatsApp.Data.Tests\Catharsium.WhatsApp.Data.Tests.csproj", "{85F5708B-7910-4233-A096-C6575422E291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Entities", "Catharsium.WhatsApp.Entities\Catharsium.WhatsApp.Entities.csproj", "{CCF1D156-820B-420C-916A-4047AD261E26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Entities", "Catharsium.WhatsApp.Entities\Catharsium.WhatsApp.Entities.csproj", "{CCF1D156-820B-420C-916A-4047AD261E26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsium.WhatsApp.Entities.Tests", "Catharsium.WhatsApp.Entities.Tests\Catharsium.WhatsApp.Entities.Tests.csproj", "{A482851E-0CFB-422D-908F-CFBDD06554CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Entities.Tests", "Catharsium.WhatsApp.Entities.Tests\Catharsium.WhatsApp.Entities.Tests.csproj", "{A482851E-0CFB-422D-908F-CFBDD06554CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9B49DD8-0C6D-417F-BC82-E624C5E5CE7D}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\Software\Catharsium.WhatsApp\appsettings.json = ..\..\..\Software\Catharsium.WhatsApp\appsettings.json
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject

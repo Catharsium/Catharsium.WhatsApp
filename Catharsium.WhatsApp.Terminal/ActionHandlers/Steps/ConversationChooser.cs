@@ -1,31 +1,26 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Terminal.Data;
-using Catharsium.WhatsApp.Terminal.Models;
-using Catharsium.WhatsApp.Terminal.Models.Comparers;
+using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 
 public class ConversationChooser : IConversationChooser
 {
-    private readonly IConversationsRepository respository;
-    private readonly IMessageParser messageParser;
-    private readonly IConversationUsersRepository conversationUsersRepository;
+    private readonly IConversationRepository conversationRepository;
     private readonly IConsole console;
 
 
-    public ConversationChooser(IConversationsRepository respository, IMessageParser messageParser, IConversationUsersRepository conversationUsersRepository, IConsole console)
+    public ConversationChooser(IConversationRepository conversationRepository, IConsole console)
     {
-        this.respository = respository;
-        this.messageParser = messageParser;
-        this.conversationUsersRepository = conversationUsersRepository;
+        this.conversationRepository = conversationRepository;
         this.console = console;
     }
 
 
-    public async Task<IEnumerable<Message>> AskAndLoad()
+    public async Task<Conversation> AskAndLoad()
     {
         this.console.WriteLine();
-        var conversations = await this.respository.GetConversations();
+        var conversations = await this.conversationRepository.GetList();
         var selectedConversation = this.console.AskForItem(conversations);
         if (selectedConversation != null) {
             this.console.WriteLine($"Conversation:\t{selectedConversation}");
@@ -33,15 +28,9 @@ public class ConversationChooser : IConversationChooser
             conversations.Add(selectedConversation);
         }
 
-        var result = new List<Message>();
-        foreach (var conversation in conversations) {
-            var conversationUsers = await this.conversationUsersRepository.Get(conversation.Name);
-            result.AddRange(await this.messageParser.GetMessages(conversation, conversationUsers));
-        }
-
-        result = result.Distinct(new MessageEqualityComparer()).OrderBy(m => m.Timestamp).ToList();
-        this.console.WriteLine($"Total Messages:\t{result.Count}");
-        this.console.WriteLine($"Last update:\t{result.Last().Timestamp:dd-MM-yyyy (HH:mm)}");
+        var result = await this.conversationRepository.Get(selectedConversation);
+        this.console.WriteLine($"Total Messages:\t{result.Messages.Count}");
+        this.console.WriteLine($"Last update:\t{result.Messages.Max(m => m.Timestamp):dd-MM-yyyy (HH:mm)}");
 
         return result;
     }
