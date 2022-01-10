@@ -1,6 +1,8 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Terminal._Configuration;
+
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class JokeActionHandler : IActionHandler
@@ -8,26 +10,33 @@ public class JokeActionHandler : IActionHandler
     private readonly IConversationChooser conversationChooser;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IConsole console;
+    private readonly WhatsAppTerminalSettings settings;
 
     public string FriendlyName => "Joke";
 
 
-    public JokeActionHandler(IConversationChooser conversationChooser, IConversationUsersRepository conversationUsersRepository, IConsole console)
+    public JokeActionHandler(
+        IConversationChooser conversationChooser,
+        IConversationUsersRepository conversationUsersRepository,
+        IConsole console,
+        WhatsAppTerminalSettings settings)
     {
         this.conversationChooser = conversationChooser;
         this.conversationUsersRepository = conversationUsersRepository;
         this.console = console;
+        this.settings = settings;
     }
 
 
     public async Task Run()
     {
+        var userAlias = this.settings.JokeAction["User alias"];
         var conversation = await this.conversationChooser.AskForConversation();
         var users = await this.conversationUsersRepository.Get(conversation.Name);
         var maxName = users.Max(u => u.ToString().Length);
-        this.console.WriteLine("Sexyness Per User");
+        this.console.WriteLine(this.settings.JokeAction["Title"]);
         foreach (var user in users) {
-            if (user.DisplayName == "Bart van L.") {
+            if (user.DisplayName == userAlias) {
                 continue;
             }
             this.console.Write($"[1]  ");
@@ -37,8 +46,8 @@ public class JokeActionHandler : IActionHandler
         }
 
         this.console.Write($"[{users.Count}] ");
-        this.console.Write("Bart van L.");
-        this.console.FillBlock("Bart van L.".Length, maxName + 5);
+        this.console.Write(userAlias);
+        this.console.FillBlock(userAlias.Length, maxName + 5);
         this.console.WriteLine("  0%");
     }
 }
