@@ -1,0 +1,34 @@
+﻿{
+  "Catharsium.WhatsApp.Data": {
+    "ExportFilesFolder": "<Path to WhatsApp exported txt files>",
+    "ConversationsFolder": "<Path to folder where data is stored>",
+    "ActiveUsers": {
+      "<WhatsApp Group name>": "<Person 1, Person 2, Person 3, +31 6 12345678, You>"
+      // The easiest way to get the current group members imported is by using WhatsApp Web:
+      // > Select the group, use the browser Inspect tool to select the list of users on top of the page and copy the value here.
+      // Use the "Import users" action in this tool to generate a "AllUsers.json" in the 'ConversationsFolder'.
+      // Manually add Aliases and DisplayNames for each user in this json file, for more readable outputs
+    }
+  },
+  "Catharsium.WordCloud": {
+    "ExcludedWords": [
+      "de",
+      "het",
+      "t",
+      "een",
+      "en",
+      "dat",
+      "ik",
+      "je",
+      "van",
+      "dat",
+      "in",
+      "op",
+      "the",
+      "a"
+    ],
+    "WordMappings": {
+      "SomeWord": "WillBeMappedToThisWord",
+    }
+  }
+}
