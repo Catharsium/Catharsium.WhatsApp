@@ -1,6 +1,6 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 
 public class PeriodChooser : IPeriodChooser

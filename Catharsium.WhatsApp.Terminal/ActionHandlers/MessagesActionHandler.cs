@@ -2,7 +2,7 @@
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class MessagesActionHandler : IActionHandler
@@ -31,7 +31,7 @@ public class MessagesActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskAndLoad();
+        var conversation = await this.conversationChooser.AskForConversation();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
 
         var users = await this.conversationUsersRepository.Get(conversation.Name);

@@ -2,10 +2,10 @@
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using Catharsium.WhatsApp.Terminal._Configuration;
 using Catharsium.WhatsApp.Terminal.ActionHandlers;
 using Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,8 +23,8 @@ public class RegistrationTests
         var configuration = Substitute.For<IConfiguration>();
 
         serviceCollection.AddWhatsAppTerminal(configuration);
-        serviceCollection.ReceivedRegistration<IActionHandler, ImportExportFilesActionHandler>();
-        serviceCollection.ReceivedRegistration<IActionHandler, ImportActiveUsersActionHandler>();
+        serviceCollection.ReceivedRegistration<IActionHandler, ImportMessagesActionHandler>();
+        serviceCollection.ReceivedRegistration<IActionHandler, ImportUsersActionHandler>();
         serviceCollection.ReceivedRegistration<IActionHandler, ActivityListActionHandler>();
         serviceCollection.ReceivedRegistration<IActionHandler, NationalityActionHandler>();
         serviceCollection.ReceivedRegistration<IActionHandler, JokeActionHandler>();

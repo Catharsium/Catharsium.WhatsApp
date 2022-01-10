@@ -1,7 +1,7 @@
 ﻿using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Entities.Terminal.Steps;
 
-public interface IConversationChooser
+public interface IUserChooser
 {
-    Task<Conversation> AskForConversation();
+    Task<User> AskForUser(string conversationName);
 }

@@ -4,14 +4,15 @@ using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class DayOfTheWeekHistogramActionHandler : IActionHandler
 {
     private readonly IConversationChooser conversationChooser;
-    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IPeriodChooser periodChooser;
+    private readonly IUserChooser userChooser;
+    private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IGraph graph;
     private readonly IConsole console;
 
@@ -20,14 +21,16 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
 
     public DayOfTheWeekHistogramActionHandler(
         IConversationChooser conversationChooser,
-        IConversationUsersRepository conversationUsersRepository,
         IPeriodChooser periodChooser,
+        IUserChooser userChooser,
+        IConversationUsersRepository conversationUsersRepository,
         IGraph graph,
         IConsole console)
     {
         this.conversationChooser = conversationChooser;
-        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
+        this.userChooser = userChooser;
+        this.conversationUsersRepository = conversationUsersRepository;
         this.graph = graph;
         this.console = console;
     }
@@ -36,11 +39,10 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskAndLoad();
-        var messages = conversation.Messages.Include(new PeriodFilter(period));
+        var conversation = await this.conversationChooser.AskForConversation();
+        var user = await this.userChooser.AskForUser(conversation.Name);
 
-        var users = await this.conversationUsersRepository.Get(conversation.Name);
-        var user = this.console.AskForItem(users);
+        var messages = conversation.Messages.Include(new PeriodFilter(period));
         if (user != null) {
             messages = messages.Include(new UserFilter(user));
         }

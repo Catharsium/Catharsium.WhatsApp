@@ -1,6 +1,6 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class JokeActionHandler : IActionHandler
@@ -22,7 +22,7 @@ public class JokeActionHandler : IActionHandler
 
     public async Task Run()
     {
-        var conversation = await this.conversationChooser.AskAndLoad();
+        var conversation = await this.conversationChooser.AskForConversation();
         var users = await this.conversationUsersRepository.Get(conversation.Name);
         var maxName = users.Max(u => u.ToString().Length);
         this.console.WriteLine("Sexyness Per User");

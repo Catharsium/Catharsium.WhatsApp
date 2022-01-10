@@ -3,17 +3,17 @@ using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class ImportActiveUsersActionHandler : IActionHandler
+public class ImportUsersActionHandler : IActionHandler
 {
     private readonly IExportUsersRepository activeUsersRepository;
     private readonly IConversationsRepository conversationRepository;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IEqualityComparer<User> userEqualityComparer;
 
-    public string FriendlyName => "Update users";
+    public string FriendlyName => "Import users";
 
 
-    public ImportActiveUsersActionHandler(
+    public ImportUsersActionHandler(
         IExportUsersRepository activeUsersRepository,
         IConversationsRepository conversationRepository,
         IConversationUsersRepository conversationUsersRepository,

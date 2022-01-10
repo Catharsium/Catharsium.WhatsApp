@@ -1,7 +1,7 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
-using Catharsium.WhatsApp.Terminal.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 
 public class ConversationChooser : IConversationChooser
@@ -17,7 +17,7 @@ public class ConversationChooser : IConversationChooser
     }
 
 
-    public async Task<Conversation> AskAndLoad()
+    public async Task<Conversation> AskForConversation()
     {
         this.console.WriteLine();
         var conversations = await this.conversationRepository.GetList();
