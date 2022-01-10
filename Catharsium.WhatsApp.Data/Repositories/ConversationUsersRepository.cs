@@ -75,7 +75,8 @@ public class ConversationUsersRepository : IConversationUsersRepository
             var currentUser = this.GetCurrentUser(activeUser, conversationName);
             User newUser;
             if (currentUser == null) {
-                newUser = new User(activeUser.PhoneNumber) {
+                newUser = new User {
+                    PhoneNumber = activeUser.PhoneNumber,
                     DisplayName = activeUser.DisplayName,
                     Aliases = activeUser.Aliases ?? new List<string>(),
                     Conversations = new List<string> { conversationName }

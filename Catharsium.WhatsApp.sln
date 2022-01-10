@@ -17,6 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catharsium.WhatsApp.Entitie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9B49DD8-0C6D-417F-BC82-E624C5E5CE7D}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\Data\WhatsApp\Data\AllUsers.json = ..\..\..\Data\WhatsApp\Data\AllUsers.json
 		..\..\..\Software\Catharsium.WhatsApp\appsettings.json = ..\..\..\Software\Catharsium.WhatsApp\appsettings.json
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection

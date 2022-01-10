@@ -33,7 +33,8 @@ public class JokeActionHandler : IActionHandler
         var userAlias = this.settings.JokeAction["User alias"];
         var conversation = await this.conversationChooser.AskForConversation();
         var users = await this.conversationUsersRepository.Get(conversation.Name);
-        var maxName = users.Max(u => u.ToString().Length);
+        var maxNameLength = users.Max(u => u.ToString().Length);
+
         this.console.WriteLine(this.settings.JokeAction["Title"]);
         foreach (var user in users) {
             if (user.DisplayName == userAlias) {
@@ -41,13 +42,13 @@ public class JokeActionHandler : IActionHandler
             }
             this.console.Write($"[1]  ");
             this.console.Write(user.ToString());
-            this.console.FillBlock(user.ToString().Length, maxName + 5);
+            this.console.FillBlock(user.ToString().Length, maxNameLength + 5);
             this.console.WriteLine("100%");
         }
 
         this.console.Write($"[{users.Count}] ");
         this.console.Write(userAlias);
-        this.console.FillBlock(userAlias.Length, maxName + 5);
+        this.console.FillBlock(userAlias.Length, maxNameLength + 5);
         this.console.WriteLine("  0%");
     }
 }
