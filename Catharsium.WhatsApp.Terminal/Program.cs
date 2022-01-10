@@ -8,9 +8,14 @@ class Program
 {
     static async Task Main(string[] args)
     {
+        var appsettingsFilePath = @"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json";
+        if(args.Length > 0) {
+            appsettingsFilePath = args[0];
+        }
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(@"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json", false, false);
+            .AddJsonFile(appsettingsFilePath, false, false);
         var configuration = builder.Build();
 
         var serviceProvider = new ServiceCollection()

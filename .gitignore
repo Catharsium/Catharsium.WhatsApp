@@ -15,3 +15,11 @@
 /Catharsium.WhatsApp.Terminal/obj
 /Catharsium.WhatsApp.Terminal.Tests/bin/Debug/net6.0
 /Catharsium.WhatsApp.Terminal.Tests/obj
+/Catharsium.WhatsApp.Data/bin/Release/net6.0
+/Catharsium.WhatsApp.Data.Tests/bin/Release/net6.0
+/Catharsium.WhatsApp.Entities/bin/Release/net6.0
+/Catharsium.WhatsApp.Entities.Tests/bin/Release/net6.0
+/Catharsium.WhatsApp.Terminal/bin/Release/net6.0
+/Catharsium.WhatsApp.Terminal.Tests/bin/Release/net6.0
+/Catharsium.WhatsApp.Terminal/Properties/PublishProfiles
+/Catharsium.WhatsApp.Terminal/Catharsium.WhatsApp.Terminal.csproj.user
