@@ -5,8 +5,8 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class ImportActiveUsersActionHandler : IActionHandler
 {
-    private readonly IActiveUsersRepository activeUsersRepository;
-    private readonly IConversationRepository conversationRepository;
+    private readonly IExportUsersRepository activeUsersRepository;
+    private readonly IConversationsRepository conversationRepository;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IEqualityComparer<User> userEqualityComparer;
 
@@ -14,8 +14,8 @@ public class ImportActiveUsersActionHandler : IActionHandler
 
 
     public ImportActiveUsersActionHandler(
-        IActiveUsersRepository activeUsersRepository,
-        IConversationRepository conversationRepository,
+        IExportUsersRepository activeUsersRepository,
+        IConversationsRepository conversationRepository,
         IConversationUsersRepository conversationUsersRepository,
         IEqualityComparer<User> userEqualityComparer)
     {
@@ -31,7 +31,7 @@ public class ImportActiveUsersActionHandler : IActionHandler
         var conversations = await this.conversationRepository.GetList();
         var allUsers = new List<User>();
         foreach (var conversation in conversations) {
-            var activeUsers = this.activeUsersRepository.GetFor(conversation);
+            var activeUsers = this.activeUsersRepository.GetForConversation(conversation);
             var users = await this.conversationUsersRepository.Add(activeUsers, conversation);
             var remainingUsers = allUsers.Where(allU => !users.Contains(allU, this.userEqualityComparer)).ToList();
             allUsers = remainingUsers;

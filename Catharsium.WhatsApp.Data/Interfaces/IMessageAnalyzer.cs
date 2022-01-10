@@ -1,4 +1,4 @@
-﻿namespace Catharsium.WhatsApp.Entities.Data;
+﻿namespace Catharsium.WhatsApp.Data.Interfaces;
 
 public interface IMessageAnalyzer
 {

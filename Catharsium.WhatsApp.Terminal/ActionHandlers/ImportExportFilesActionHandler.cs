@@ -2,18 +2,17 @@
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;
-
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class ImportExportFilesActionHandler : IActionHandler
 {
     private readonly IExportFilesRepository exportFilesRepository;
-    private readonly IConversationRepository conversationRepository;
+    private readonly IConversationsRepository conversationRepository;
 
     public string FriendlyName => "Import export files";
 
 
-    public ImportExportFilesActionHandler(IExportFilesRepository exportFilesRepository, IConversationRepository conversationRepository)
+    public ImportExportFilesActionHandler(IExportFilesRepository exportFilesRepository, IConversationsRepository conversationRepository)
     {
         this.exportFilesRepository = exportFilesRepository;
         this.conversationRepository = conversationRepository;

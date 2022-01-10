@@ -2,6 +2,7 @@
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO._Configuration;
 using Catharsium.WhatsApp.Data.Filters;
+using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Data.Logic;
 using Catharsium.WhatsApp.Data.Repositories;
 using Catharsium.WhatsApp.Data.Repositories.Readers;
@@ -20,14 +21,13 @@ public static class Registration
 
         services.AddIoUtilities(config);
 
-        services.AddScoped<IActiveUsersRepository, ActiveUsersRepository>();
+        services.AddScoped<IExportUsersRepository, ExportUsersRepository>();
         services.AddScoped<IExportFilesRepository, ExportFilesRepository>();
-        services.AddScoped<IConversationUsersRepository, UsersRepository>();
-        services.AddScoped<IConversationRepository, ConversationRepository>();
-
-        services.AddScoped<IMessageParser, MessageParser>();
+        services.AddScoped<IConversationsRepository, ConversationsRepository>();
+        services.AddScoped<IConversationUsersRepository, ConversationUsersRepository>();
 
         services.AddScoped<IMessageAnalyzer, MessageAnalyzer>();
+        services.AddScoped<IMessageParser, MessageParser>();
 
         services.AddScoped<IFilter<Message>, PeriodFilter>();
         services.AddScoped<IFilter<Message>, UserFilter>();

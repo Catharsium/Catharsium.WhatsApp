@@ -1,13 +1,14 @@
 ﻿using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
+using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class UserStatisticsActionHandler : IActionHandler
 {
-    private readonly IConversationRepository conversationRepository;
+    private readonly IConversationsRepository conversationRepository;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IMessageParser messageParser;
     private readonly IEqualityComparer<User> userEqualityComparer;
@@ -17,7 +18,7 @@ public class UserStatisticsActionHandler : IActionHandler
 
 
     public UserStatisticsActionHandler(
-        IConversationRepository conversationRepository,
+        IConversationsRepository conversationRepository,
         IConversationUsersRepository conversationUsersRepository,
         IMessageParser messageParser,
         IEqualityComparer<User> userEqualityComparer,

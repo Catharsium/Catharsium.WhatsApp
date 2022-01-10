@@ -1,5 +1,6 @@
 ﻿using Catharsium.Util.IO.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
+using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;
@@ -10,11 +11,11 @@ public class ExportFilesRepository : IExportFilesRepository
 {
     private readonly IFileFactory fileFactory;
     private readonly IMessageParser messageParser;
-    private readonly IActiveUsersRepository activeUsersRepository;
+    private readonly IExportUsersRepository activeUsersRepository;
     private readonly WhatsAppDataSettings settings;
 
 
-    public ExportFilesRepository(IFileFactory fileFactory, IMessageParser messageParser, IActiveUsersRepository activeUsersRepository, WhatsAppDataSettings settings)
+    public ExportFilesRepository(IFileFactory fileFactory, IMessageParser messageParser, IExportUsersRepository activeUsersRepository, WhatsAppDataSettings settings)
     {
         this.fileFactory = fileFactory;
         this.messageParser = messageParser;

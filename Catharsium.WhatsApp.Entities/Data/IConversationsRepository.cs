@@ -1,7 +1,7 @@
 ﻿using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Entities.Data;
 
-public interface IConversationRepository
+public interface IConversationsRepository
 {
     Task<List<string>> GetList();
     Task<Conversation> Get(string name);

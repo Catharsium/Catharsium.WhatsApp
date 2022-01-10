@@ -4,7 +4,7 @@ using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Repositories;
 
-public class ConversationRepository : IConversationRepository
+public class ConversationsRepository : IConversationsRepository
 {
     private readonly IFileFactory fileFactory;
     private readonly IJsonFileReader jsonFileReader;
@@ -12,7 +12,7 @@ public class ConversationRepository : IConversationRepository
     private readonly WhatsAppDataSettings settings;
 
 
-    public ConversationRepository(IFileFactory fileFactory, IJsonFileReader jsonFileReader, IJsonFileWriter jsonFileWriter, WhatsAppDataSettings settings)
+    public ConversationsRepository(IFileFactory fileFactory, IJsonFileReader jsonFileReader, IJsonFileWriter jsonFileWriter, WhatsAppDataSettings settings)
     {
         this.fileFactory = fileFactory;
         this.jsonFileReader = jsonFileReader;

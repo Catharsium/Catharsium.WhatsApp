@@ -6,11 +6,11 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 
 public class ConversationChooser : IConversationChooser
 {
-    private readonly IConversationRepository conversationRepository;
+    private readonly IConversationsRepository conversationRepository;
     private readonly IConsole console;
 
 
-    public ConversationChooser(IConversationRepository conversationRepository, IConsole console)
+    public ConversationChooser(IConversationsRepository conversationRepository, IConsole console)
     {
         this.conversationRepository = conversationRepository;
         this.console = console;

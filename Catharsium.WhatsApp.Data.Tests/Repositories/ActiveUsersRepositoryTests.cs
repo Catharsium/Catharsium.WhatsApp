@@ -8,7 +8,7 @@ using System.Linq;
 namespace Catharsium.WhatsApp.Data.Tests.Repositories;
 
 [TestClass]
-public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
+public class ActiveUsersRepositoryTests : TestFixture<ExportUsersRepository>
 {
     #region Fixture
 
@@ -39,7 +39,7 @@ public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
     [TestMethod]
     public void GetFor_ValidConversationName_ReturnsUsers()
     {
-        var actual = this.Target.GetFor(ConversationName);
+        var actual = this.Target.GetForConversation(ConversationName);
         Assert.IsNotNull(actual);
         Assert.AreEqual(2, actual.Count);
     }
@@ -48,7 +48,7 @@ public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
     [TestMethod]
     public void GetFor_InvalidConversationName_ReturnsEmptyList()
     {
-        var actual = this.Target.GetFor(ConversationName + "Other");
+        var actual = this.Target.GetForConversation(ConversationName + "Other");
         Assert.IsNotNull(actual);
         Assert.AreEqual(0, actual.Count);
     }
@@ -57,7 +57,7 @@ public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
     [TestMethod]
     public void GetFor_PhoneNumberInList_ReturnsUserWithPhoneNumber()
     {
-        var actual = this.Target.GetFor(ConversationName);
+        var actual = this.Target.GetForConversation(ConversationName);
         Assert.IsNotNull(actual);
         Assert.IsTrue(actual.Any(u => u.PhoneNumber == this.PhoneUser.PhoneNumber));
     }
@@ -66,7 +66,7 @@ public class ActiveUsersRepositoryTests : TestFixture<ActiveUsersRepository>
     [TestMethod]
     public void GetFor_AliasInList_ReturnsUserWithAlias()
     {
-        var actual = this.Target.GetFor(ConversationName);
+        var actual = this.Target.GetForConversation(ConversationName);
         Assert.IsNotNull(actual);
         Assert.IsTrue(actual.Any(u => u.Aliases.Any(a => a == this.AliasUser.Aliases[0])));
     }

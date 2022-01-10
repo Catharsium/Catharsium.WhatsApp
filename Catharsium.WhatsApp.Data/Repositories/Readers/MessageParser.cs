@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Interfaces;
-using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
 using System.Text.RegularExpressions;
 namespace Catharsium.WhatsApp.Data.Repositories.Readers;

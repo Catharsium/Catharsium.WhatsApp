@@ -3,18 +3,18 @@ using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Repositories;
 
-public class ActiveUsersRepository : IActiveUsersRepository
+public class ExportUsersRepository : IExportUsersRepository
 {
     private readonly WhatsAppDataSettings settings;
 
 
-    public ActiveUsersRepository(WhatsAppDataSettings settings)
+    public ExportUsersRepository(WhatsAppDataSettings settings)
     {
         this.settings = settings;
     }
 
 
-    public List<User> GetFor(string conversationName)
+    public List<User> GetForConversation(string conversationName)
     {
         var result = new List<User>();
         if (this.settings.ActiveUsers.ContainsKey(conversationName)) {

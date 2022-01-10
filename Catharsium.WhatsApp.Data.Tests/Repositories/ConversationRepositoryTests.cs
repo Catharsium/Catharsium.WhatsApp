@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Catharsium.WhatsApp.Data.Tests.Repositories;
 
 [TestClass]
-public class ConversationRepositoryTests : TestFixture<ConversationRepository>
+public class ConversationRepositoryTests : TestFixture<ConversationsRepository>
 {
     #region Fixture
 
