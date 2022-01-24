@@ -9,7 +9,7 @@ public class ImportMessagesActionHandler : IActionHandler
     private readonly IExportFilesRepository exportFilesRepository;
     private readonly IConversationsRepository conversationRepository;
 
-    public string FriendlyName => "Import messages";
+    public string DisplayName => "Import messages";
 
 
     public ImportMessagesActionHandler(IExportFilesRepository exportFilesRepository, IConversationsRepository conversationRepository)

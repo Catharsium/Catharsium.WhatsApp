@@ -1,5 +1,5 @@
-﻿using Catharsium.Math.Graph.Interfaces;
-using Catharsium.Math.Graph.Models;
+﻿using Catharsium.Math.Graphs.Interfaces;
+using Catharsium.Math.Graphs.Models;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
@@ -16,7 +16,7 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
     private readonly IGraph graph;
     private readonly IConsole console;
 
-    public string FriendlyName => "Day of the Week Histogram";
+    public string DisplayName => "Day of the Week Histogram";
 
 
     public DayOfTheWeekHistogramActionHandler(
@@ -39,7 +39,7 @@ public class DayOfTheWeekHistogramActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var user = await this.userChooser.AskForUser(conversation.Name);
 
         var messages = conversation.Messages.Include(new PeriodFilter(period));

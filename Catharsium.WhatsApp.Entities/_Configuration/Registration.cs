@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.Configuration.Extensions;
-using Catharsium.Util.IO._Configuration;
+using Catharsium.Util.IO.Files._Configuration;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ public static class Registration
         var configuration = config.Load<WhatsAppEntitiesSettings>();
         services.AddSingleton<WhatsAppEntitiesSettings, WhatsAppEntitiesSettings>(provider => configuration);
 
-        services.AddIoUtilities(config);
+        services.AddFilesIoUtilities(config);
 
         services.AddScoped<IEqualityComparer<Message>, MessageEqualityComparer>();
         services.AddScoped<IEqualityComparer<User>, UserEqualityComparer>();

@@ -3,7 +3,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
 public class ReportActionHandler : IActionHandler
 {
-    public string FriendlyName => "Rapport";
+    public string DisplayName => "Rapport";
 
 
     public async Task Run()

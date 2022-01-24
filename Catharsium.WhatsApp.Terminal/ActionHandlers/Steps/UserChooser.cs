@@ -10,6 +10,7 @@ namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps
         private readonly IConversationUsersRepository conversationUsersRepository;
         private readonly IConsole console;
 
+
         public UserChooser(IConversationUsersRepository conversationUsersRepository, IConsole console)
         {
             this.conversationUsersRepository = conversationUsersRepository;

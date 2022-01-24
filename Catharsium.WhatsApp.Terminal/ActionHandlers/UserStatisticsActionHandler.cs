@@ -1,6 +1,4 @@
-﻿using Catharsium.Util.Filters;
-using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.WhatsApp.Data.Filters;
+﻿using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
@@ -14,7 +12,7 @@ public class UserStatisticsActionHandler : IActionHandler
     private readonly IEqualityComparer<User> userEqualityComparer;
     private readonly IConsole console;
 
-    public string FriendlyName => "User Statistics";
+    public string DisplayName => "User Statistics";
 
 
     public UserStatisticsActionHandler(

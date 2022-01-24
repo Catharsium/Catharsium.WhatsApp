@@ -1,8 +1,9 @@
-﻿using Catharsium.Math.Graph._Configuration;
+﻿using Catharsium.Math.Graphs._Configuration;
 using Catharsium.Util.Configuration.Extensions;
 using Catharsium.Util.IO.Console._Configuration;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using Catharsium.WhatsApp.Terminal.ActionHandlers;
 using Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;

@@ -1,4 +1,4 @@
-﻿using Catharsium.Util.IO.Interfaces;
+﻿using Catharsium.Util.IO.Files.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Repositories.Readers;
 

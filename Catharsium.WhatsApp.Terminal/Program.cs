@@ -9,7 +9,8 @@ class Program
     static async Task Main(string[] args)
     {
         var appsettingsFilePath = @"E:\Cloud\OneDrive\Software\Catharsium.WhatsApp\appsettings.json";
-        if(args.Length > 0) {
+        //var appsettingsFilePath = @"C:\Users\twbra\OneDrive\Software\Catharsium.WhatsApp\appsettings.json";
+        if (args.Length > 0) {
             appsettingsFilePath = args[0];
         }
 

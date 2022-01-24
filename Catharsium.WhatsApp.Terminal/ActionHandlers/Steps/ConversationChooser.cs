@@ -17,7 +17,7 @@ public class ConversationChooser : IConversationChooser
     }
 
 
-    public async Task<Conversation> AskForConversation()
+    public async Task<Conversation> Run()
     {
         this.console.WriteLine();
         var conversations = await this.conversationRepository.GetList();

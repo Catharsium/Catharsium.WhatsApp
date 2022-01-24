@@ -12,7 +12,7 @@ public class JokeActionHandler : IActionHandler
     private readonly IConsole console;
     private readonly WhatsAppTerminalSettings settings;
 
-    public string FriendlyName => "Joke";
+    public string DisplayName => "Joke";
 
 
     public JokeActionHandler(
@@ -31,7 +31,7 @@ public class JokeActionHandler : IActionHandler
     public async Task Run()
     {
         var userAlias = this.settings.JokeAction["User alias"];
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var users = await this.conversationUsersRepository.Get(conversation.Name);
         var maxNameLength = users.Max(u => u.ToString().Length);
 

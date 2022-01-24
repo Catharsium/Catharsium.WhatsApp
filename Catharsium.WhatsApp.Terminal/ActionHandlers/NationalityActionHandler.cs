@@ -1,7 +1,6 @@
 ﻿using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Entities.Models.Comparers;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
@@ -11,7 +10,7 @@ public class NationalityActionHandler : IActionHandler
     private readonly IPeriodChooser periodChooser;
     private readonly IConsole console;
 
-    public string FriendlyName => "De Buren Strijd";
+    public string DisplayName => "De Buren Strijd";
 
 
     public NationalityActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IConsole console)
@@ -24,7 +23,7 @@ public class NationalityActionHandler : IActionHandler
 
     public async Task Run()
     {
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var period = await this.periodChooser.AskForPeriod();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
 

@@ -10,7 +10,7 @@ public class ImportUsersActionHandler : IActionHandler
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IEqualityComparer<User> userEqualityComparer;
 
-    public string FriendlyName => "Import users";
+    public string DisplayName => "Import users";
 
 
     public ImportUsersActionHandler(

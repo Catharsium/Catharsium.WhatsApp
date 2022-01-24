@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Catharsium.Math.Graph" Version="2021.6.4.4" />
-    <PackageReference Include="Catharsium.Util.IO.Console" Version="2022.1.10.20" />
+    <PackageReference Include="Catharsium.Math.Graphs" Version="2022.1.22.3" />
+    <PackageReference Include="Catharsium.Util" Version="2022.1.16.19" />
+    <PackageReference Include="Catharsium.Util.IO.Console" Version="2022.1.16.19" />
     <PackageReference Include="Catharsium.WordCloud" Version="2022.1.10.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>

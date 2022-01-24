@@ -1,4 +1,4 @@
-﻿using Catharsium.Util.Filters;
+﻿using Catharsium.Util.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Data.Filters;
 

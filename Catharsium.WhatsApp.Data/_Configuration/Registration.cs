@@ -1,6 +1,6 @@
 ﻿using Catharsium.Util.Configuration.Extensions;
-using Catharsium.Util.Filters;
-using Catharsium.Util.IO._Configuration;
+using Catharsium.Util.Interfaces;
+using Catharsium.Util.IO.Files._Configuration;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Data.Logic;
@@ -19,7 +19,7 @@ public static class Registration
         var configuration = config.Load<WhatsAppDataSettings>();
         services.AddSingleton<WhatsAppDataSettings, WhatsAppDataSettings>(provider => configuration);
 
-        services.AddIoUtilities(config);
+        services.AddFilesIoUtilities(config);
 
         services.AddScoped<IExportUsersRepository, ExportUsersRepository>();
         services.AddScoped<IExportFilesRepository, ExportFilesRepository>();

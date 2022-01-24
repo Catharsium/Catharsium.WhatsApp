@@ -1,4 +1,4 @@
-﻿using Catharsium.Util.IO.Interfaces;
+﻿using Catharsium.Util.IO.Files.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;

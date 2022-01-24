@@ -1,5 +1,5 @@
 ﻿using Catharsium.Util.IO.Console.Interfaces;
-using Catharsium.Util.IO.Interfaces;
+using Catharsium.Util.IO.Files.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;

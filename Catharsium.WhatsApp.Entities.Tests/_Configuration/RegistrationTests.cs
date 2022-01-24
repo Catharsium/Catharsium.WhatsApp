@@ -1,4 +1,4 @@
-﻿using Catharsium.Util.IO.Interfaces;
+﻿using Catharsium.Util.IO.Files.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;

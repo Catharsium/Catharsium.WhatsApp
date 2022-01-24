@@ -1,5 +1,5 @@
-﻿using Catharsium.Math.Graph.Interfaces;
-using Catharsium.Math.Graph.Models;
+﻿using Catharsium.Math.Graphs.Interfaces;
+using Catharsium.Math.Graphs.Models;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
@@ -14,7 +14,7 @@ public class HourOfTheDayHistogramActionHandler : IActionHandler
     private readonly IGraph graph;
     private readonly IConsole console;
 
-    public string FriendlyName => "Hour of the Day Histogram";
+    public string DisplayName => "Hour of the Day Histogram";
 
 
     public HourOfTheDayHistogramActionHandler(
@@ -35,7 +35,7 @@ public class HourOfTheDayHistogramActionHandler : IActionHandler
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var user = await this.userChooser.AskForUser(conversation.Name);
 
         var messages = conversation.Messages.Include(new PeriodFilter(period));

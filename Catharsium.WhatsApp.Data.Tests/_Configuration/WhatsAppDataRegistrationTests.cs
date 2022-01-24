@@ -1,5 +1,5 @@
-﻿using Catharsium.Util.Filters;
-using Catharsium.Util.IO.Interfaces;
+﻿using Catharsium.Util.Interfaces;
+using Catharsium.Util.IO.Files.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Data.Filters;

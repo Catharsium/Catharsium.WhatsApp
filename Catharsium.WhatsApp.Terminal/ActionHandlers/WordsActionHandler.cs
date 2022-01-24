@@ -1,5 +1,5 @@
-﻿using Catharsium.Math.Graph.Interfaces;
-using Catharsium.Math.Graph.Models;
+﻿using Catharsium.Math.Graphs.Interfaces;
+using Catharsium.Math.Graphs.Models;
 using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
@@ -34,13 +34,13 @@ public class WordsActionHandler : IActionHandler
     }
 
 
-    public string FriendlyName => "Words";
+    public string DisplayName => "Words";
 
 
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var user = await this.userChooser.AskForUser(conversation.Name);
         var specificWord = this.console.AskForText("Search for a specific word:");
 
@@ -49,7 +49,7 @@ public class WordsActionHandler : IActionHandler
             messages = messages.Include(new UserFilter(user));
         }
 
-        var texts = messages.Select(m => m.Text).Where(x => x != null).ToArray(); 
+        var texts = messages.Select(m => m.Text).Where(x => x != null).ToArray();
         this.wordCounter.Add(texts);
         var words = this.wordCounter.Words.OrderByDescending(w => w.Value);
 

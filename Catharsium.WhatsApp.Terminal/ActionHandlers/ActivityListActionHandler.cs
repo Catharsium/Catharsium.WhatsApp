@@ -1,9 +1,11 @@
-﻿using Catharsium.Util.Filters;
+﻿using Catharsium.Util.Configuration.Interfaces;
+using Catharsium.Util.Filters;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 using System.Globalization;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
@@ -14,7 +16,7 @@ public class ActivityListActionHandler : IActionHandler
     private readonly IPeriodChooser periodChooser;
     private readonly IConsole console;
 
-    public string FriendlyName => "Activity list";
+    public string DisplayName => "Activity list";
 
 
     public ActivityListActionHandler(
@@ -29,11 +31,10 @@ public class ActivityListActionHandler : IActionHandler
         this.console = console;
     }
 
-
     public async Task Run()
     {
         var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.AskForConversation();
+        var conversation = await this.conversationChooser.Run();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
         var users = await this.conversationUsersRepository.Get(conversation.Name);
 
@@ -84,10 +85,10 @@ public class ActivityListActionHandler : IActionHandler
         this.FillSpaces(text.Length);
         this.console.ResetColor();
 
-        if (statistics.LastMessage.Timestamp.AddDays(7) < referenceDate) {
+        if (statistics.LastMessage.Timestamp.AddDays(14) < referenceDate) {
             this.console.ForegroundColor = ConsoleColor.Yellow;
         }
-        if (statistics.LastMessage.Timestamp.AddDays(14) < referenceDate) {
+        if (statistics.LastMessage.Timestamp.AddDays(30) < referenceDate) {
             this.console.ForegroundColor = ConsoleColor.Red;
         }
         this.console.Write($"{statistics.LastMessage.Timestamp.ToString("d MMMMM yyyy", dutchCulture)}");
