@@ -1,4 +1,4 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.WhatsApp.Terminal._Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +23,7 @@ class Program
             .AddWhatsAppTerminal(configuration)
             .BuildServiceProvider();
 
-        var chooseOperationActionHandler = serviceProvider.GetService<IChooseActionHandler>();
-        await chooseOperationActionHandler.Run();
+        var mainMenuActionHandler = serviceProvider.GetService<ISingleMenuActionHandler>();
+        await mainMenuActionHandler.Run();
     }
 }

@@ -1,9 +1,9 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
+using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Models;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 
-public class PeriodChooser : IPeriodChooser
+public class PeriodChooser : ISelectionActionStep<Period>
 {
     private readonly IConsole console;
 
@@ -14,7 +14,7 @@ public class PeriodChooser : IPeriodChooser
     }
 
 
-    public async Task<Period> AskForPeriod()
+    public async Task<Period> Select()
     {
         return await Task.FromResult(
              new Period {

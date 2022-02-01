@@ -1,37 +1,36 @@
 ﻿using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class MessagesActionHandler : IActionHandler
+public class MessagesActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
+    private readonly ISelectionActionStep<Period> periodChooser;
     private readonly IConversationUsersRepository conversationUsersRepository;
-    private readonly IPeriodChooser periodChooser;
-    private readonly IConsole console;
-
-    public string DisplayName => "Messages";
 
 
     public MessagesActionHandler(
-        IConversationChooser conversationChooser,
+        ISelectionActionStep<Conversation> conversationChooser,
+        ISelectionActionStep<Period> periodChooser,
         IConversationUsersRepository conversationUsersRepository,
-        IPeriodChooser periodChooser,
         IConsole console)
+        : base(console, "Messages")
     {
         this.conversationChooser = conversationChooser;
-        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
-        this.console = console;
+        this.conversationUsersRepository = conversationUsersRepository;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
-        var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.Run();
+        var period = await this.periodChooser.Select();
+        var conversation = await this.conversationChooser.Select();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
 
         var users = await this.conversationUsersRepository.Get(conversation.Name);

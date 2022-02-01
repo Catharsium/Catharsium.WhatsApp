@@ -1,8 +1,7 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.Testing.Extensions;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using Catharsium.WhatsApp.Terminal._Configuration;
 using Catharsium.WhatsApp.Terminal.ActionHandlers;
 using Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
@@ -31,8 +30,8 @@ public class RegistrationTests
         serviceCollection.ReceivedRegistration<IActionHandler, HourOfTheDayHistogramActionHandler>();
         serviceCollection.ReceivedRegistration<IActionHandler, DayOfTheWeekHistogramActionHandler>();
 
-        serviceCollection.ReceivedRegistration<IConversationChooser, ConversationChooser>();
-        serviceCollection.ReceivedRegistration<IPeriodChooser, PeriodChooser>();
+        serviceCollection.ReceivedRegistration<ISelectionActionStep<Conversation>, ConversationChooser>();
+        serviceCollection.ReceivedRegistration<ISelectionActionStep<Period>, PeriodChooser>();
     }
 
 

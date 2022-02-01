@@ -1,37 +1,35 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
+using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Terminal._Configuration;
-
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class JokeActionHandler : IActionHandler
+public class JokeActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
     private readonly IConversationUsersRepository conversationUsersRepository;
-    private readonly IConsole console;
     private readonly WhatsAppTerminalSettings settings;
-
-    public string DisplayName => "Joke";
 
 
     public JokeActionHandler(
-        IConversationChooser conversationChooser,
+        ISelectionActionStep<Conversation> conversationChooser,
         IConversationUsersRepository conversationUsersRepository,
         IConsole console,
         WhatsAppTerminalSettings settings)
+        : base(console, "Joke")
     {
         this.conversationChooser = conversationChooser;
         this.conversationUsersRepository = conversationUsersRepository;
-        this.console = console;
         this.settings = settings;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
         var userAlias = this.settings.JokeAction["User alias"];
-        var conversation = await this.conversationChooser.Run();
+        var conversation = await this.conversationChooser.Select();
         var users = await this.conversationUsersRepository.Get(conversation.Name);
         var maxNameLength = users.Max(u => u.ToString().Length);
 
@@ -46,7 +44,7 @@ public class JokeActionHandler : IActionHandler
             this.console.WriteLine("100%");
         }
 
-        this.console.Write($"[{users.Count}] ");
+        this.console.Write($"[{users.Count()}] ");
         this.console.Write(userAlias);
         this.console.FillBlock(userAlias.Length, maxNameLength + 5);
         this.console.WriteLine("  0%");

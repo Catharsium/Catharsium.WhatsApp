@@ -1,12 +1,15 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.Interfaces;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class ReportActionHandler : IActionHandler
+public class ReportActionHandler : BaseActionHandler
 {
-    public string DisplayName => "Rapport";
+    public ReportActionHandler(IConsole console)
+        : base(console, "Rapport")
+    { }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
         //var activityList = new ActivityListActionHandler();
     }

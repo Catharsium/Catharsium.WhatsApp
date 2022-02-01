@@ -1,18 +1,16 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class UserStatisticsActionHandler : IActionHandler
+public class UserStatisticsActionHandler : BaseActionHandler
 {
     private readonly IConversationsRepository conversationRepository;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IMessageParser messageParser;
     private readonly IEqualityComparer<User> userEqualityComparer;
-    private readonly IConsole console;
-
-    public string DisplayName => "User Statistics";
 
 
     public UserStatisticsActionHandler(
@@ -21,16 +19,16 @@ public class UserStatisticsActionHandler : IActionHandler
         IMessageParser messageParser,
         IEqualityComparer<User> userEqualityComparer,
         IConsole console)
+        : base(console, "User Statistics")
     {
         this.conversationRepository = conversationRepository;
         this.conversationUsersRepository = conversationUsersRepository;
         this.messageParser = messageParser;
         this.userEqualityComparer = userEqualityComparer;
-        this.console = console;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
         //var conversations = await this.conversationRepository.GetList();
         //foreach (var conversationName in conversations) {

@@ -1,40 +1,37 @@
-﻿using Catharsium.Util.Configuration.Interfaces;
-using Catharsium.Util.Filters;
+﻿using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
-using Catharsium.WhatsApp.Terminal.ActionHandlers.Steps;
 using System.Globalization;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class ActivityListActionHandler : IActionHandler
+public class ActivityListActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
+    private readonly ISelectionActionStep<Period> periodChooser;
     private readonly IConversationUsersRepository conversationUsersRepository;
-    private readonly IPeriodChooser periodChooser;
-    private readonly IConsole console;
-
-    public string DisplayName => "Activity list";
 
 
     public ActivityListActionHandler(
-        IConversationChooser conversationChooser,
+        ISelectionActionStep<Conversation> conversationChooser,
+        ISelectionActionStep<Period> periodChooser,
         IConversationUsersRepository conversationUsersRepository,
-        IPeriodChooser periodChooser,
         IConsole console)
+        : base(console, "Activity list")
     {
         this.conversationChooser = conversationChooser;
-        this.conversationUsersRepository = conversationUsersRepository;
         this.periodChooser = periodChooser;
-        this.console = console;
+        this.conversationUsersRepository = conversationUsersRepository;
     }
 
-    public async Task Run()
+
+    public override async Task Run()
     {
-        var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.Run();
+        var period = await this.periodChooser.Select();
+        var conversation = await this.conversationChooser.Select();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
         var users = await this.conversationUsersRepository.Get(conversation.Name);
 
@@ -53,7 +50,7 @@ public class ActivityListActionHandler : IActionHandler
         var fromValue = period.From != DateTime.MinValue ? $"{period.From:dd-MM-yyyy}" : "*";
         var toValue = period.To != DateTime.MaxValue ? $"{period.To:dd-MM-yyyy}" : "*";
 
-        this.console.WriteLine($"Users:\t\t{users.Count}");
+        this.console.WriteLine($"Users:\t\t{users.Count()}");
         this.console.WriteLine($"Period:\t\t{fromValue} - {toValue}");
         this.console.WriteLine($"\t<Name>\t\t<Messages/Day>\t<Characters>\t<Messages>\t<MessageLength>\t<Last Message>");
         this.console.WriteLine();

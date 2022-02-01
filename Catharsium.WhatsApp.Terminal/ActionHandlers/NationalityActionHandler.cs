@@ -1,30 +1,32 @@
 ﻿using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
-using Catharsium.WhatsApp.Entities.Terminal.Steps;
+using Catharsium.WhatsApp.Entities.Models;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class NationalityActionHandler : IActionHandler
+public class NationalityActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
-    private readonly IPeriodChooser periodChooser;
-    private readonly IConsole console;
-
-    public string DisplayName => "De Buren Strijd";
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
+    private readonly ISelectionActionStep<Period> periodChooser;
 
 
-    public NationalityActionHandler(IConversationChooser conversationChooser, IPeriodChooser periodChooser, IConsole console)
+    public NationalityActionHandler(
+        ISelectionActionStep<Conversation> conversationChooser,
+        ISelectionActionStep<Period> periodChooser,
+        IConsole console)
+        : base(console, "De Buren Strijd")
     {
         this.conversationChooser = conversationChooser;
         this.periodChooser = periodChooser;
-        this.console = console;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
-        var conversation = await this.conversationChooser.Run();
-        var period = await this.periodChooser.AskForPeriod();
+        var conversation = await this.conversationChooser.Select();
+        var period = await this.periodChooser.Select();
         var messages = conversation.Messages.Include(new PeriodFilter(period));
 
         //var groups = messages.GroupBy(m => m.Sender.PhoneNumber[..3]);

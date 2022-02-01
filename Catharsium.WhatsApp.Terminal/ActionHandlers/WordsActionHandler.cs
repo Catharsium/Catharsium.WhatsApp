@@ -1,46 +1,44 @@
 ﻿using Catharsium.Math.Graphs.Interfaces;
 using Catharsium.Math.Graphs.Models;
 using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 using Catharsium.WordCloud.Interfaces;
-
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class WordsActionHandler : IActionHandler
+public class WordsActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
-    private readonly IPeriodChooser periodChooser;
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
+    private readonly ISelectionActionStep<Period> periodChooser;
     private readonly IUserChooser userChooser;
     private readonly IWordCounter wordCounter;
     private readonly IGraph graph;
-    private readonly IConsole console;
 
     public WordsActionHandler(
-        IConversationChooser conversationChooser,
-        IPeriodChooser periodChooser,
+        ISelectionActionStep<Conversation> conversationChooser,
+        ISelectionActionStep<Period> periodChooser,
         IUserChooser userChooser,
         IWordCounter wordCounter,
         IGraph graph,
         IConsole console)
+        : base(console, "Words")
     {
         this.conversationChooser = conversationChooser;
         this.periodChooser = periodChooser;
         this.userChooser = userChooser;
         this.wordCounter = wordCounter;
         this.graph = graph;
-        this.console = console;
     }
 
 
-    public string DisplayName => "Words";
-
-
-    public async Task Run()
+    public override async Task Run()
     {
-        var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.Run();
+        var period = await this.periodChooser.Select();
+        var conversation = await this.conversationChooser.Select();
         var user = await this.userChooser.AskForUser(conversation.Name);
         var specificWord = this.console.AskForText("Search for a specific word:");
 

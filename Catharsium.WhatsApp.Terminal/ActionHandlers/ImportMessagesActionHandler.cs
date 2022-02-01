@@ -1,25 +1,26 @@
-﻿using Catharsium.Util.IO.Console.Interfaces;
+﻿using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Entities.Data;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Models.Comparers;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class ImportMessagesActionHandler : IActionHandler
+public class ImportMessagesActionHandler : BaseActionHandler
 {
     private readonly IExportFilesRepository exportFilesRepository;
     private readonly IConversationsRepository conversationRepository;
 
-    public string DisplayName => "Import messages";
 
 
-    public ImportMessagesActionHandler(IExportFilesRepository exportFilesRepository, IConversationsRepository conversationRepository)
+    public ImportMessagesActionHandler(IExportFilesRepository exportFilesRepository, IConversationsRepository conversationRepository, IConsole console)
+        : base(console, "Import messages")
     {
         this.exportFilesRepository = exportFilesRepository;
         this.conversationRepository = conversationRepository;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
         var conversations = await this.exportFilesRepository.GetConversations();
         foreach (var conversation in conversations) {

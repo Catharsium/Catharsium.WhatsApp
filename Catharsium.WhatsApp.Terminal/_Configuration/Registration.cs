@@ -1,7 +1,7 @@
 ﻿using Catharsium.Math.Graphs._Configuration;
 using Catharsium.Util.Configuration.Extensions;
 using Catharsium.Util.IO.Console._Configuration;
-using Catharsium.Util.IO.Console.Interfaces;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.WhatsApp.Data._Configuration;
 using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
@@ -36,8 +36,8 @@ public static class Registration
         services.AddScoped<IActionHandler, UserStatisticsActionHandler>();
         services.AddScoped<IActionHandler, WordsActionHandler>();
 
-        services.AddScoped<IConversationChooser, ConversationChooser>();
-        services.AddScoped<IPeriodChooser, PeriodChooser>();
+        services.AddScoped<ISelectionActionStep<Conversation>, ConversationChooser>();
+        services.AddScoped<ISelectionActionStep<Period>, PeriodChooser>();
         services.AddScoped<IUserChooser, UserChooser>();
 
         return services;

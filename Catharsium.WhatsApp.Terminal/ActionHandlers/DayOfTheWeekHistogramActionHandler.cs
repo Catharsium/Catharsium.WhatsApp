@@ -1,45 +1,45 @@
 ﻿using Catharsium.Math.Graphs.Interfaces;
 using Catharsium.Math.Graphs.Models;
 using Catharsium.Util.Filters;
+using Catharsium.Util.IO.Console.ActionHandlers.Base;
+using Catharsium.Util.IO.Console.ActionHandlers.Interfaces;
 using Catharsium.Util.IO.Console.Interfaces;
 using Catharsium.WhatsApp.Data.Filters;
 using Catharsium.WhatsApp.Entities.Data;
+using Catharsium.WhatsApp.Entities.Models;
 using Catharsium.WhatsApp.Entities.Terminal.Steps;
 namespace Catharsium.WhatsApp.Terminal.ActionHandlers;
 
-public class DayOfTheWeekHistogramActionHandler : IActionHandler
+public class DayOfTheWeekHistogramActionHandler : BaseActionHandler
 {
-    private readonly IConversationChooser conversationChooser;
-    private readonly IPeriodChooser periodChooser;
+    private readonly ISelectionActionStep<Conversation> conversationChooser;
+    private readonly ISelectionActionStep<Period> periodChooser;
     private readonly IUserChooser userChooser;
     private readonly IConversationUsersRepository conversationUsersRepository;
     private readonly IGraph graph;
-    private readonly IConsole console;
-
-    public string DisplayName => "Day of the Week Histogram";
 
 
     public DayOfTheWeekHistogramActionHandler(
-        IConversationChooser conversationChooser,
-        IPeriodChooser periodChooser,
+        ISelectionActionStep<Conversation> conversationChooser,
+        ISelectionActionStep<Period> periodChooser,
         IUserChooser userChooser,
         IConversationUsersRepository conversationUsersRepository,
         IGraph graph,
         IConsole console)
+        : base(console, "Day of the Week Histogram")
     {
         this.conversationChooser = conversationChooser;
         this.periodChooser = periodChooser;
         this.userChooser = userChooser;
         this.conversationUsersRepository = conversationUsersRepository;
         this.graph = graph;
-        this.console = console;
     }
 
 
-    public async Task Run()
+    public override async Task Run()
     {
-        var period = await this.periodChooser.AskForPeriod();
-        var conversation = await this.conversationChooser.Run();
+        var period = await this.periodChooser.Select();
+        var conversation = await this.conversationChooser.Select();
         var user = await this.userChooser.AskForUser(conversation.Name);
 
         var messages = conversation.Messages.Include(new PeriodFilter(period));
